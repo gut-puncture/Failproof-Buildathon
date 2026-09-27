@@ -1,16 +1,16 @@
 # Failure to Check
 
-Help existing Codex agents learn from their mistakes through reusable Jev checks.
-Use your usual worker model. A separate reviewer turns supported mistakes into
-advisory policies; later chats in the same project discover them automatically.
-Model weights stay unchanged.
+Improve existing Codex agents with reusable Failproof policies and Jev checks.
+Keep your usual worker agent and model. A separate reviewer turns supported
+mistakes into advisory checks; model weights do not change.
 
-## Install once in your project
+## Set up once
 
-You need Python 3.9+, Node.js 22.22+, authenticated Codex with `UserPromptSubmit`
-and `Stop` hooks, and a Failproof key when policies are active.
+You need Python 3.9+, Node.js 22.22+, authenticated Codex CLI with hooks enabled,
+and a Failproof key for policy checks. CLI `0.158.0-alpha.2.1` is tested; desktop
+parity is unverified.
 
-From this downloaded repository:
+Save your Failproof key alone in a private text file, then run from this repository:
 
 ```sh
 npm ci --ignore-scripts --omit=optional --no-audit --no-fund
@@ -18,53 +18,37 @@ export FAILPROOF_KEY_FILE=/absolute/path/to/private-key.txt
 python3 install_hook.py --project /absolute/path/to/your-project
 ```
 
-Keep this repository in place. `CODEX_BIN` and `NODE_BIN` select executables when
-the ones on PATH are unsuitable. The installer checks the selected versions;
-Codex CLI `0.158.0-alpha.2.1` is the tested build. It preserves existing hooks and
-prints the outside reviewer folder it creates. `--dry-run` previews installation;
-`--reviewer /outside/folder` chooses that folder.
+Keep this repository in place. Follow the installer's printed CLI launch
+directions: trust your project folder, then use `/hooks` to review and trust both
+commands. It also prints a separate reviewer folder. Set the key variable before
+launching worker and reviewer chats. Use `CODEX_BIN` or `NODE_BIN` if needed to
+select supported executables.
 
-Start the selected Codex CLI in your project, trust the folder, and use
-**`/hooks`** to review and trust the two installed commands. Set the credential
-environment variable before starting the CLI. Nothing is installed globally.
+## See it in action
 
-## Work, then learn from a real run
+1. **Work normally** in your project chat. Installation starts with **zero
+   policies**: no Jev calls or interruptions. Completed message pairs are saved
+   locally in `.jev/runs/`.
+2. **Review a run** in a separate Codex chat opened from the printed reviewer
+   folder. We recommend Astra. Invoke the installed skill:
 
-Work normally. Installation starts with **zero policies**: no Jev calls and no
-interruptions. Completed message pairs are saved locally in `.jev/runs/`.
+   > $failure-to-check — List saved runs, review the run I choose, and save useful
+   > advisory policies after sanity checks. Report no supported failure when
+   > appropriate.
 
-When you want a review, open a separate Codex chat in the printed reviewer folder
-and ask:
+3. **Keep working.** Later turns and new chats in the same project automatically
+   discover saved policies. Jev can produce **one combined advisory** in the
+   worker chat. The worker may correct its work or explain why the advice does
+   not apply. That continuation is **never rechecked**; the next human message
+   starts a fresh cycle.
 
-> Use failure-to-check. List the saved runs, review the run I choose, and save
-> useful advisory policies after a few sanity checks. Report no supported failure
-> when appropriate.
+## Deliberate limits
 
-The reviewer can be Astra or another model you choose. It stays outside the
-hooked project and writes policy data to `.jev/policies/`. The installed skill
-includes the commands for selecting a run, checking a policy and saving it.
+Jev sees only the latest human message and completed worker response—no history,
+files, tool outputs, or diffs. This keeps the implementation simple. Checks must
+concern evidence visible in those two messages. Missing evidence and service
+errors stay unchecked; silence does not prove correctness.
 
-On subsequent worker turns, relevant Jev results can produce **one combined
-review request in that same chat**. Your worker may correct its work or explain
-why the advice does not apply. When that continuation ends, the hook exits
-immediately: no second Jev call or automatic recheck. The next human message
-starts a fresh cycle. The hook runs no project tests, builds or extra model.
-
-## What Jev can see
-
-Only the latest genuine **human message** and its completed **worker response**
-are sent as evidence. No history, source files, tool outputs or diffs are added.
-This deliberate simplification suits errors visible in those texts. A short
-follow-up or a response that merely says “done” may not contain enough evidence
-to assess the underlying work; it remains unchecked. A required omission in the
-response itself can be observable.
-
-Policies use one shared native Failproof wrapper and focused yes/no questions.
-Advice is fallible. Missing evidence, unclear applicability and service errors
-remain quiet and unchecked; a negative result does not prove correctness.
-Local records retain the pair, policy/version, result, advice and continuation
-skip. Keep credentials in the environment/key file, outside chats and policies.
-
-[Current verification and limitations](EVIDENCE.md) ·
-[Reviewer skill](skills/failure-to-check/SKILL.md) ·
-[Historical prototype results](HISTORICAL_EVIDENCE.md)
+The [evidence](EVIDENCE.md) demonstrates the flow using a **seeded test**. Three
+natural trials found no supported failures. General improvement is not yet
+demonstrated.
