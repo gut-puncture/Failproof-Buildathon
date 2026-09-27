@@ -24,11 +24,11 @@ The file should contain your Failproof API key. Set this variable before startin
 ## 2. Try the demo
 
 ```sh
-python3 demo.py          # Replay saved evidence; no API calls
-python3 demo.py --live   # Real Jev check, native policy, one Luna repair
+python3 demo.py          # Execute saved before/after code; no API calls
+python3 demo.py --live   # Live Jev policy, fresh Luna repair, execution and diff
 ```
 
-Live runs use your model/service access and may produce different results.
+Both modes execute the code and show the mistake, tests, and code changes. The default uses a saved repair and clearly labels recorded Jev decisions. `--live` generates a fresh repair and makes real service calls; results can vary. The original failure and Sol check are saved inputs, not rediscovered during this command.
 
 ## 3. Use it in your own project
 
