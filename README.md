@@ -1,4 +1,8 @@
-# A self-improving coding agent
+# A system for improving cheaper Codex coding agents
+
+**We did not create a new agent. We built a system to improve weaker, cheaper general-purpose coding agents already available in Codex.**
+
+Our goal is to help existing agents improve through reusable checks derived from their real mistakes.
 
 **One agent's mistake becomes a reusable check that helps the next agent.**
 
