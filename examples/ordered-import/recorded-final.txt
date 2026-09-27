@@ -1,0 +1,11 @@
+Implemented `importRows` in [candidate.mjs](/private/tmp/coding-task-ntl3vogn/candidate.mjs).
+
+Verified:
+
+- Preparation concurrency limits and synchronous initial starts
+- Ordered, non-overlapping commits
+- Successful committed results
+- Preparation-failure prefixes and exact errors
+- Commit failure short-circuiting
+- Empty rows and invalid concurrency handling
+- Syntax validation with `node --check`

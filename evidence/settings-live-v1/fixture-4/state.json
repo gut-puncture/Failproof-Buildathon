@@ -1,0 +1,4 @@
+{
+  "task": "Merge only the fixed keys a and b. Null inherits at every key. No additional keys are accepted.",
+  "implementation": "function merge(low,high){return {a:high.a??low.a,b:high.b??low.b};}"
+}

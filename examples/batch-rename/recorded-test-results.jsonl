@@ -1,0 +1,12 @@
+{"name":"simultaneous three-way cycle preserves binary contents and unrelated file","passed":true}
+{"name":"chain into previously unused filename works","passed":true}
+{"name":"empty and same-name plans preserve folder exactly","passed":true}
+{"name":"preflight rejects duplicate sources before any rename","passed":true}
+{"name":"preflight rejects duplicate destinations before any rename","passed":true}
+{"name":"preflight rejects missing source before any rename","passed":true}
+{"name":"preflight rejects occupied unrelated destination before any rename","passed":true}
+{"name":"publication failure 1 restores all original names and bytes","passed":true}
+{"name":"publication failure 2 restores all original names and bytes","passed":true}
+{"name":"publication failure 3 restores all original names and bytes","passed":true}
+{"name":"early staging failure restores the whole folder","passed":true}
+{"summary":{"total":11,"passed":11,"failed":0}}

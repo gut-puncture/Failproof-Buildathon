@@ -1,0 +1,23 @@
+{
+  "name": "Failure to Check \u2014 a self-improving coding agent",
+  "org_id": "9ba36231-d101-4e4b-8558-a50391eb89e2",
+  "org_slug": "jev-hackathon",
+  "entrypoint": "python3 demo.py",
+  "live_entrypoint": "python3 demo.py --live",
+  "hook_installer": "python3 install_hook.py --help",
+  "reviewer": "gpt-6-sol",
+  "worker": "gpt-5.6-luna",
+  "worker_reasoning": "medium",
+  "native_primitives": [
+    "Noul",
+    "customPolicies.add",
+    "Cloud session events"
+  ],
+  "result": "Native deny before correction; all 14 tests pass after one correction; separate final native allow recheck.",
+  "limitations": [
+    "One bounded verified repair",
+    "Hook interactive continuation not smoke-tested",
+    "Other discovered failure checks remain experimental",
+    "Service errors and initial adapter failure preserved"
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "kind": "fixture_evaluation",
+  "results": [
+    {
+      "checkId": "falsy-commit-error-used-as-state",
+      "version": 1,
+      "checkHash": "97dcc1b2878a7b87312b20faa292ae010f6d198b4de419d154557f19de86a41d",
+      "timestamp": "2026-09-27T11:51:01.657Z",
+      "mode": "paired",
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "decision": "violation_detected",
+      "scores": {
+        "applicability": 0.94,
+        "violation": 0.85
+      },
+      "rawScores": {
+        "applicability": 0.94,
+        "violation": 0.85
+      },
+      "reasons": {},
+      "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+      "requestHash": "4b6afe6a12c64b7953badfa2bc65985e87d602726daeb8634a997b25fc1edee7",
+      "httpStatus": 200,
+      "reason": "violation_positive",
+      "elapsedMs": 1387,
+      "fixtureId": "actual-luna-failure",
+      "expectedViolation": true,
+      "expectedApplicable": true
+    },
+    {
+      "checkId": "falsy-commit-error-used-as-state",
+      "version": 1,
+      "checkHash": "97dcc1b2878a7b87312b20faa292ae010f6d198b4de419d154557f19de86a41d",
+      "timestamp": "2026-09-27T11:51:03.155Z",
+      "mode": "paired",
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "decision": "no_violation_detected",
+      "scores": {
+        "applicability": 0.94,
+        "violation": 0.08
+      },
+      "rawScores": {
+        "applicability": 0.94,
+        "violation": 0.08
+      },
+      "reasons": {},
+      "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+      "requestHash": "f3acd2267c469c0ba35b0426e34acc5b2c6345c5733ed2aa359faaff2cb0e5e9",
+      "httpStatus": 200,
+      "reason": "violation_negative",
+      "elapsedMs": 1379,
+      "fixtureId": "reference-control",
+      "expectedViolation": false,
+      "expectedApplicable": true
+    },
+    {
+      "checkId": "falsy-commit-error-used-as-state",
+      "version": 1,
+      "checkHash": "97dcc1b2878a7b87312b20faa292ae010f6d198b4de419d154557f19de86a41d",
+      "timestamp": "2026-09-27T11:51:04.612Z",
+      "mode": "paired",
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "decision": "violation_detected",
+      "scores": {
+        "applicability": 0.91,
+        "violation": 0.82
+      },
+      "rawScores": {
+        "applicability": 0.91,
+        "violation": 0.82
+      },
+      "reasons": {},
+      "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+      "requestHash": "eeb76127333653f39a2879925272db0161ab9c4326821903e9168c16bb49b7f5",
+      "httpStatus": 200,
+      "reason": "violation_positive",
+      "elapsedMs": 1393,
+      "fixtureId": "constructed-falsy-error-defect",
+      "expectedViolation": true,
+      "expectedApplicable": true
+    },
+    {
+      "checkId": "falsy-commit-error-used-as-state",
+      "version": 1,
+      "checkHash": "97dcc1b2878a7b87312b20faa292ae010f6d198b4de419d154557f19de86a41d",
+      "timestamp": "2026-09-27T11:51:06.107Z",
+      "mode": "paired",
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "decision": "not_applicable",
+      "scores": {
+        "applicability": 0.2,
+        "violation": 0.84
+      },
+      "rawScores": {
+        "applicability": 0.2,
+        "violation": 0.84
+      },
+      "reasons": {},
+      "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+      "requestHash": "cbfa957bce3b44419e48932d2e517551acbb41dfa886410c264878cfd8a0bfad",
+      "httpStatus": 200,
+      "reason": "applicability_negative",
+      "elapsedMs": 1905,
+      "fixtureId": "constructed-falsy-error-inapplicable",
+      "expectedViolation": false,
+      "expectedApplicable": false
+    }
+  ],
+  "summary": {
+    "total": 4,
+    "unchecked": 0,
+    "missedBugs": 0,
+    "falseAlarms": 0
+  },
+  "decision": "violation_detected",
+  "scope": "Results apply only to supplied fixtures."
+}

@@ -1,0 +1,129 @@
+{
+  "kind": "fixture_evaluation",
+  "results": [
+    {
+      "checkId": "active-preparations-counted-as-finished",
+      "version": 1,
+      "checkHash": "bce609cd593febf7b6a777dfc650091acda615fa595e9f1332ca9f09b4486b24",
+      "timestamp": "2026-09-27T11:50:56.537Z",
+      "mode": "paired",
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "decision": "unchecked",
+      "scores": {
+        "applicability": 0.93,
+        "violation": 0.49
+      },
+      "rawScores": {
+        "applicability": 0.93,
+        "violation": 0.49
+      },
+      "reasons": {},
+      "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+      "requestHash": "af7eae50068e8ddff63bfb758da82ad78d21542e1a85217f148682de9d81a499",
+      "httpStatus": 200,
+      "reason": "violation_ambiguous",
+      "elapsedMs": 1646,
+      "fixtureId": "actual-luna-failure",
+      "expectedViolation": true,
+      "expectedApplicable": true
+    },
+    {
+      "checkId": "active-preparations-counted-as-finished",
+      "version": 1,
+      "checkHash": "bce609cd593febf7b6a777dfc650091acda615fa595e9f1332ca9f09b4486b24",
+      "timestamp": "2026-09-27T11:50:58.371Z",
+      "mode": "paired",
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "decision": "no_violation_detected",
+      "scores": {
+        "applicability": 0.92,
+        "violation": 0.1
+      },
+      "rawScores": {
+        "applicability": 0.92,
+        "violation": 0.1
+      },
+      "reasons": {},
+      "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+      "requestHash": "c1eaaaf6b2f9dd279ea4838aacbd6a203afd85dc4e1916b35f95e6a87a29b3bc",
+      "httpStatus": 200,
+      "reason": "violation_negative",
+      "elapsedMs": 1386,
+      "fixtureId": "reference-control",
+      "expectedViolation": false,
+      "expectedApplicable": true
+    },
+    {
+      "checkId": "active-preparations-counted-as-finished",
+      "version": 1,
+      "checkHash": "bce609cd593febf7b6a777dfc650091acda615fa595e9f1332ca9f09b4486b24",
+      "timestamp": "2026-09-27T11:50:59.864Z",
+      "mode": "paired",
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "decision": "unchecked",
+      "scores": {
+        "applicability": 0.91,
+        "violation": 0.39
+      },
+      "rawScores": {
+        "applicability": 0.91,
+        "violation": 0.39
+      },
+      "reasons": {},
+      "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+      "requestHash": "c0e712d059232ed5fab753fc6a4c7518de48bd6ef6462e7ee27077589afca8b6",
+      "httpStatus": 200,
+      "reason": "violation_ambiguous",
+      "elapsedMs": 1374,
+      "fixtureId": "constructed-active-count-defect",
+      "expectedViolation": true,
+      "expectedApplicable": true
+    },
+    {
+      "checkId": "active-preparations-counted-as-finished",
+      "version": 1,
+      "checkHash": "bce609cd593febf7b6a777dfc650091acda615fa595e9f1332ca9f09b4486b24",
+      "timestamp": "2026-09-27T11:51:01.346Z",
+      "mode": "paired",
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "decision": "no_violation_detected",
+      "scores": {
+        "applicability": 0.88,
+        "violation": 0.07
+      },
+      "rawScores": {
+        "applicability": 0.88,
+        "violation": 0.07
+      },
+      "reasons": {},
+      "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+      "requestHash": "de8081bd42c522b1c309f3dd6534d65c1ed0e92ebb0085c34b2b926f7fdb9a58",
+      "httpStatus": 200,
+      "reason": "violation_negative",
+      "elapsedMs": 1214,
+      "fixtureId": "constructed-all-settled-alternative",
+      "expectedViolation": false,
+      "expectedApplicable": true
+    }
+  ],
+  "summary": {
+    "total": 4,
+    "unchecked": 2,
+    "missedBugs": 0,
+    "falseAlarms": 0
+  },
+  "decision": "unchecked",
+  "scope": "Results apply only to supplied fixtures."
+}

@@ -1,0 +1,2 @@
+{"case":"completed-swap-then-failure","before":{"a.txt":"A","b.txt":"B","c.txt":"C"},"after":{"b.txt":"A","c.txt":"C"},"injected":true,"sameError":true,"calls":9}
+{"summary":{"total":1,"passed":0,"failed":1},"reason":"Expected values to be strictly deep-equal:\n+ actual - expected\n\n  {\n+   'b.txt': 'A',\n-   'a.txt': 'A',\n-   'b.txt': 'B',\n    'c.txt': 'C'\n  }"}

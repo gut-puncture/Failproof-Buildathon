@@ -1,0 +1,9 @@
+Updated only [candidate.mjs](/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/evidence/ordered-native-repair-v3/correction/candidate.mjs).
+
+Fixed:
+
+- Waiting for all started preparations to settle before resolving/rejecting.
+- Correct handling of falsy rejection reasons.
+- Commit failures taking precedence correctly.
+
+Focused checks passed.

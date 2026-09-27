@@ -1,0 +1,4 @@
+{
+  "task": "For one invoice, await promise-returning prepare, then await promise-returning commit and return its receipt. If commit rejects with any JavaScript value, reject with that exact value.",
+  "implementation": "async function postInvoice(invoice,{prepare,commit}){const ready=await prepare(invoice);let failure,receipt;try{receipt=await commit(ready)}catch(e){failure=e}if(failure)throw failure;return receipt}"
+}

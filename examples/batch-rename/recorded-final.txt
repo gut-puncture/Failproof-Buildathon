@@ -1,0 +1,12 @@
+Implemented `renameBatch` in [candidate.mjs](/private/tmp/coding-task-z7pl0oc3/candidate.mjs).
+
+Verified:
+
+- Swaps, cycles, chains, and self-renames
+- Invalid-plan rejection without mutation
+- Binary content preservation
+- Injected rename failures at every phase
+- Exact error propagation and full recovery
+- Temporary-file cleanup
+
+Source is 77 lines.

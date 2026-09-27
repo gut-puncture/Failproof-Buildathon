@@ -1,0 +1,8 @@
+{
+  "decision": "unchecked",
+  "reason": "native_policy_unavailable_or_unchecked",
+  "nativePolicy": {
+    "engine": "failproofai",
+    "decision": "unchecked"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "kind": "candidate_check",
+  "decision": "violation_detected",
+  "results": [
+    {
+      "checkId": "falsy-commit-error-used-as-state",
+      "version": 1,
+      "checkHash": "97dcc1b2878a7b87312b20faa292ae010f6d198b4de419d154557f19de86a41d",
+      "timestamp": "2026-09-27T11:57:25.322Z",
+      "mode": "paired",
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "decision": "violation_detected",
+      "scores": {
+        "applicability": 0.94,
+        "violation": 0.85
+      },
+      "rawScores": {
+        "applicability": 0.94,
+        "violation": 0.85
+      },
+      "reasons": {},
+      "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+      "requestHash": "4b6afe6a12c64b7953badfa2bc65985e87d602726daeb8634a997b25fc1edee7",
+      "httpStatus": 200,
+      "reason": "violation_positive",
+      "elapsedMs": 1783,
+      "nativePolicy": {
+        "engine": "failproofai",
+        "version": "1.0.8-beta.0",
+        "policyName": "reusable-semantic-check",
+        "decision": "deny",
+        "engineDecision": "deny",
+        "exitCode": 0,
+        "reason": "Blocked semantic_submit_candidate by failproofai because: semantic_candidate_gate: A rejection reason can be undefined, null, 0, false, or an empty string; use a separate failure flag., as per the policy configured by the user",
+        "enforcementPoint": "Explicit custom-harness candidate acceptance via PreToolUse"
+      }
+    }
+  ],
+  "scope": "Supplied checks and explicit context only; not a proof of program correctness.",
+  "beforeTests": [
+    {
+      "suite": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/examples/ordered-import/tests.mjs",
+      "candidate": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/examples/ordered-import/candidate.mjs",
+      "exitCode": 1,
+      "status": "failed"
+    },
+    {
+      "suite": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/examples/ordered-import/supplemental-tests.mjs",
+      "candidate": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/examples/ordered-import/candidate.mjs",
+      "exitCode": 1,
+      "status": "failed"
+    }
+  ],
+  "correction": {
+    "outcome": "needs_review",
+    "candidate": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/evidence/ordered-native-repair-v3/correction/candidate.mjs",
+    "after": [
+      {
+        "decision": "unchecked",
+        "reason": "native_policy_unavailable_or_unchecked",
+        "nativePolicy": {
+          "engine": "failproofai",
+          "decision": "unchecked"
+        }
+      }
+    ],
+    "decision": "unchecked",
+    "independentTests": [
+      {
+        "suite": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/examples/ordered-import/tests.mjs",
+        "candidate": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/evidence/ordered-native-repair-v3/correction/candidate.mjs",
+        "exitCode": 0,
+        "status": "passed"
+      },
+      {
+        "suite": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/examples/ordered-import/supplemental-tests.mjs",
+        "candidate": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/evidence/ordered-native-repair-v3/correction/candidate.mjs",
+        "exitCode": 0,
+        "status": "passed"
+      }
+    ],
+    "scope": "One correction attempt using Jev feedback and captured original test evidence; semantic results alone do not verify program correctness."
+  }
+}

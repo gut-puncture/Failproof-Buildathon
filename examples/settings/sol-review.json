@@ -1,0 +1,90 @@
+{
+  "audit": {
+    "confirmed": true,
+    "reproduction": "Input: defaults={}, workspace=undefined, request={'delivery.enabled':null}. Actual: {}. Required: {'delivery.enabled':null}. The root property named 'delivery.enabled' is an additional field, so its null is explicit. A minimal Node reproduction of the supplied logic produced {}.",
+    "root_cause": "resolveValue constructs childPath by joining property names with periods, then uses that string to decide whether null inherits. A root key named 'delivery.enabled' is indistinguishable from the nested path delivery → enabled.",
+    "generic_principle": "When behavior depends on a property's structural location, preserve path segments; a delimiter-joined string can collide with a literal property name.",
+    "limitations": [
+      "The reproduction treats the HTML entities in the supplied code as formatting escapes.",
+      "This audit targets the confirmed path collision, not every possible behavior of the resolver."
+    ]
+  },
+  "check": {
+    "id": "structural-path-null-inheritance",
+    "version": 1,
+    "requiredInputs": [
+      "task",
+      "implementation"
+    ],
+    "questions": {
+      "applicability": {
+        "instructions": "Read state.task. Does it limit null inheritance to specific nested property paths, require null to remain explicit on other fields, and allow string property names containing periods?",
+        "criteria": {
+          "true": "All three conditions hold.",
+          "false": "Any condition does not hold."
+        }
+      },
+      "violation": {
+        "instructions": "Read state. Can a property whose literal name contains a period be mistaken for a designated nested null-inheritance path, causing its explicit null to be inherited or omitted?",
+        "criteria": {
+          "true": "The implementation has this path collision and changes the required result.",
+          "false": "It preserves structural path identity, otherwise avoids the collision, or follows a different permitted contract."
+        }
+      },
+      "single": {
+        "instructions": "Does state.task require null inheritance only at designated nested paths while allowing period-containing keys with explicit null, and does state.implementation wrongly apply inheritance to such a literal key because it confuses that key with a nested path?",
+        "criteria": {
+          "true": "Both the task conditions and the concrete collision hold.",
+          "false": "Either the task conditions or the collision is absent."
+        }
+      }
+    },
+    "thresholds": {
+      "positive": 0.8,
+      "negative": 0.2
+    },
+    "feedback": "Check structural path identity. A literal root key such as 'a.b' must not receive rules meant only for nested a → b."
+  },
+  "fixtures": [
+    {
+      "id": "defective-joined-path",
+      "state": {
+        "task": "Implement merge(low, high). Recursively merge plain records. Undefined inherits. Null inherits only at nested a → b; elsewhere null is explicit. Own string keys may contain periods.",
+        "implementation": "function merge(low={},high={},path=''){const out={};for(const k of new Set([...Object.keys(low),...Object.keys(high)])){const p=path?path+'.'+k:k;let v=high[k];if(v===undefined||(v===null&&p==='a.b'))v=low[k];if(v===undefined)continue;out[k]=v&&typeof v==='object'&&!Array.isArray(v)?merge(low[k]&&typeof low[k]==='object'&&!Array.isArray(low[k])?low[k]:{},v,p):v;}return out;}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": true,
+      "reason": "A root key named 'a.b' with null is incorrectly inherited."
+    },
+    {
+      "id": "repaired-segment-path",
+      "state": {
+        "task": "Implement merge(low, high). Recursively merge plain records. Undefined inherits. Null inherits only at nested a → b; elsewhere null is explicit. Own string keys may contain periods.",
+        "implementation": "function merge(low={},high={},path=[]){const out={};for(const k of new Set([...Object.keys(low),...Object.keys(high)])){const p=[...path,k];let v=high[k];if(v===undefined||(v===null&&p.length===2&&p[0]==='a'&&p[1]==='b'))v=low[k];if(v===undefined)continue;out[k]=v&&typeof v==='object'&&!Array.isArray(v)?merge(low[k]&&typeof low[k]==='object'&&!Array.isArray(low[k])?low[k]:{},v,p):v;}return out;}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "The implementation checks path segments, so a literal 'a.b' key remains distinct."
+    },
+    {
+      "id": "inapplicable-null-contract",
+      "state": {
+        "task": "Merge only the fixed keys a and b. Null inherits at every key. No additional keys are accepted.",
+        "implementation": "function merge(low,high){return {a:high.a??low.a,b:high.b??low.b};}"
+      },
+      "expectedApplicable": false,
+      "expectedViolation": false,
+      "reason": "The task has no explicit-null additional fields or period-containing keys."
+    },
+    {
+      "id": "near-miss-dotted-diagnostic",
+      "state": {
+        "task": "Implement merge(low, high). Recursively merge plain records. Undefined inherits. Null inherits only at nested a → b; elsewhere null is explicit. Own string keys may contain periods.",
+        "implementation": "function merge(low={},high={},path=[]){const out={};for(const k of new Set([...Object.keys(low),...Object.keys(high)])){const p=[...path,k];const diagnostic=p.join('.');void diagnostic;let v=high[k];if(v===undefined||(v===null&&p.length===2&&p[0]==='a'&&p[1]==='b'))v=low[k];if(v===undefined)continue;out[k]=v&&typeof v==='object'&&!Array.isArray(v)?merge(low[k]&&typeof low[k]==='object'&&!Array.isArray(low[k])?low[k]:{},v,p):v;}return out;}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "A dotted string is formed only for diagnostics; the null rule uses structural segments."
+    }
+  ]
+}

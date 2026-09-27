@@ -1,0 +1,4 @@
+{
+  "task": "For nonempty tasks, invoke every promise-returning callback and wait for all started callbacks to settle before resolving or rejecting.",
+  "implementation": "function run(tasks){return new Promise((resolve,reject)=>{let started=tasks.length,active=started,settled=0;tasks.forEach(t=>t().then(()=>{active--;settled++;if(settled+active===started)resolve()},e=>{active--;settled++;if(settled+active===started)reject(e)}))})}"
+}

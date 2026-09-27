@@ -1,0 +1,26 @@
+{
+  "checkId": "active-preparations-counted-as-finished",
+  "version": 1,
+  "checkHash": "bce609cd593febf7b6a777dfc650091acda615fa595e9f1332ca9f09b4486b24",
+  "timestamp": "2026-09-27T11:50:58.371Z",
+  "mode": "paired",
+  "thresholds": {
+    "positive": 0.8,
+    "negative": 0.2
+  },
+  "decision": "no_violation_detected",
+  "scores": {
+    "applicability": 0.92,
+    "violation": 0.1
+  },
+  "rawScores": {
+    "applicability": 0.92,
+    "violation": 0.1
+  },
+  "reasons": {},
+  "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+  "requestHash": "c1eaaaf6b2f9dd279ea4838aacbd6a203afd85dc4e1916b35f95e6a87a29b3bc",
+  "httpStatus": 200,
+  "reason": "violation_negative",
+  "elapsedMs": 1386
+}

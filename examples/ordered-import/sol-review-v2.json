@@ -1,0 +1,131 @@
+{
+  "audit": {
+    "confirmed": true,
+    "reproduction": "Executed the original candidate.mjs. With prepare(0) pending and prepare(1) rejecting, importRows rejected while prepare(0) was still pending. Separately, with one row and commit throwing undefined, importRows fulfilled with an empty result slot instead of rejecting with undefined. With a pending second preparation, that falsy commit failure also allowed commit(1) to run after commit(0) failed.",
+    "root_cause": "The finish guard counts active preparations as accounted for, so it can settle without waiting for them. Separately, commitError holds both the rejection reason and the failure state; truthiness checks fail when that reason is undefined or another falsy value.",
+    "generic_principle": "Require all started callbacks to settle before reporting an outcome. Track whether a failure occurred separately from its exact rejection value.",
+    "limitations": [
+      "These reproductions establish two distinct violations; they are not an exhaustive audit."
+    ]
+  },
+  "checks": [
+    {
+      "id": "active-preparations-counted-as-finished",
+      "version": 1,
+      "requiredInputs": [
+        "task",
+        "implementation"
+      ],
+      "questions": {
+        "applicability": {
+          "instructions": "Does state.task require the returned promise to wait until every started prepare callback settles?",
+          "criteria": {
+            "true": "All started preparations must settle before the returned promise settles.",
+            "false": "Early settlement is permitted or the task gives no such requirement."
+          }
+        },
+        "violation": {
+          "instructions": "Does state.implementation's terminal condition count still-active preparations as satisfying its preparation-completion test, without also requiring zero active preparations or an equivalent all-settled gate?",
+          "criteria": {
+            "true": "Active preparations satisfy the finish condition and no separate gate excludes them.",
+            "false": "The finish condition requires all started preparations to settle."
+          }
+        },
+        "single": {
+          "instructions": "Does the task require waiting for all started preparations while the implementation's terminal condition counts active preparations as complete without an all-settled gate?",
+          "criteria": {
+            "true": "Both literal conditions hold.",
+            "false": "Either condition is absent."
+          }
+        }
+      },
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "feedback": "Inspect the finish condition itself: accounting for an active callback does not mean it has settled."
+    },
+    {
+      "id": "falsy-commit-error-used-as-state",
+      "version": 1,
+      "requiredInputs": [
+        "task",
+        "implementation"
+      ],
+      "questions": {
+        "applicability": {
+          "instructions": "Does state.task require rejection with the exact value thrown or rejected by commit, without restricting that value to truthy Errors?",
+          "criteria": {
+            "true": "A falsy commit failure value is allowed and must remain the rejection reason.",
+            "false": "Commit cannot fail, or its failure values are explicitly restricted to truthy values."
+          }
+        },
+        "violation": {
+          "instructions": "Does state.implementation use the truthiness of the stored commit rejection reason as its only test for whether a commit failed?",
+          "criteria": {
+            "true": "Commit failure is stored in the reason variable and tested with a truthiness condition, with no separate failure flag or status.",
+            "false": "Failure is detected independently of the rejection reason's truthiness."
+          }
+        },
+        "single": {
+          "instructions": "Does the task require exact rejection for potentially falsy commit errors, while the implementation detects commit failure only through the stored error value's truthiness?",
+          "criteria": {
+            "true": "Both literal conditions hold.",
+            "false": "Either condition is absent."
+          }
+        }
+      },
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "feedback": "A rejection reason can be undefined, null, 0, false, or an empty string; use a separate failure flag."
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "constructed-active-count-defect",
+      "checkId": "active-preparations-counted-as-finished",
+      "state": {
+        "task": "For nonempty tasks, invoke every promise-returning callback and wait for all started callbacks to settle before resolving or rejecting.",
+        "implementation": "function run(tasks){return new Promise((resolve,reject)=>{let started=tasks.length,active=started,settled=0;tasks.forEach(t=>t().then(()=>{active--;settled++;if(settled+active===started)resolve()},e=>{active--;settled++;if(settled+active===started)reject(e)}))})}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": true,
+      "reason": "Constructed test: the accounting equality permits settlement with active callbacks."
+    },
+    {
+      "id": "constructed-all-settled-alternative",
+      "checkId": "active-preparations-counted-as-finished",
+      "state": {
+        "task": "For nonempty tasks, invoke every promise-returning callback and wait for all started callbacks to settle before resolving or rejecting.",
+        "implementation": "function run(tasks){return Promise.allSettled(tasks.map(t=>t())).then(out=>{const failure=out.find(x=>x.status==='rejected');if(failure)throw failure.reason;return out.map(x=>x.value)})}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "Constructed test: a different valid implementation waits through Promise.allSettled."
+    },
+    {
+      "id": "constructed-falsy-error-defect",
+      "checkId": "falsy-commit-error-used-as-state",
+      "state": {
+        "task": "For one row, call prepare then commit. If commit throws any JavaScript value, reject with that exact value.",
+        "implementation": "async function importRows(rows,{prepare,commit}){let error;try{return [await commit(await prepare(rows[0],0),0)]}catch(e){error=e}if(error)throw error;return []}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": true,
+      "reason": "Constructed test: throwing undefined reaches the fulfillment path."
+    },
+    {
+      "id": "constructed-falsy-error-inapplicable",
+      "checkId": "falsy-commit-error-used-as-state",
+      "state": {
+        "task": "For one row, call prepare then commit. Commit may throw only Error objects; reject with that Error.",
+        "implementation": "async function importRows(rows,{prepare,commit}){let error;try{return [await commit(await prepare(rows[0],0),0)]}catch(e){error=e}if(error)throw error;return []}"
+      },
+      "expectedApplicable": false,
+      "expectedViolation": false,
+      "reason": "Constructed test: this different contract excludes falsy failure values."
+    }
+  ]
+}

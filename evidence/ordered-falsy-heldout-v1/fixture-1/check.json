@@ -1,0 +1,36 @@
+{
+  "id": "falsy-commit-error-used-as-state",
+  "version": 1,
+  "requiredInputs": [
+    "task",
+    "implementation"
+  ],
+  "questions": {
+    "applicability": {
+      "instructions": "Does state.task require rejection with the exact value thrown or rejected by commit, without restricting that value to truthy Errors?",
+      "criteria": {
+        "true": "A falsy commit failure value is allowed and must remain the rejection reason.",
+        "false": "Commit cannot fail, or its failure values are explicitly restricted to truthy values."
+      }
+    },
+    "violation": {
+      "instructions": "Does state.implementation use the truthiness of the stored commit rejection reason as its only test for whether a commit failed?",
+      "criteria": {
+        "true": "Commit failure is stored in the reason variable and tested with a truthiness condition, with no separate failure flag or status.",
+        "false": "Failure is detected independently of the rejection reason's truthiness."
+      }
+    },
+    "single": {
+      "instructions": "Does the task require exact rejection for potentially falsy commit errors, while the implementation detects commit failure only through the stored error value's truthiness?",
+      "criteria": {
+        "true": "Both literal conditions hold.",
+        "false": "Either condition is absent."
+      }
+    }
+  },
+  "thresholds": {
+    "positive": 0.8,
+    "negative": 0.2
+  },
+  "feedback": "A rejection reason can be undefined, null, 0, false, or an empty string; use a separate failure flag."
+}

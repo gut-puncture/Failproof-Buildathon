@@ -1,0 +1,64 @@
+{
+  "fixtures": [
+    {
+      "id": "actual-luna-failure",
+      "state": {
+        "task": "# Resolve layered report settings\n\nImplement `resolveReportSettings(defaults, workspace, request)` in `candidate.mjs`, exporting it as a named function. Our report service combines a default configuration, saved workspace preferences, and per-request overrides. Return the resolved configuration as a new object.\n\nThe usual configuration contains these six settings:\n\n```js\n{\n  delivery: { enabled: true, recipients: ['ops@example.test'] },\n  display: { title: 'Weekly report', columns: ['name', 'total'] },\n  limits: { maxRows: 100, timeoutMs: 5000 }\n}\n```\n\nUse the following rules consistently at every object depth:\n\n- Precedence is request, then workspace, then defaults.\n- An absent property or a property set to `undefined` inherits from the next lower layer.\n- `null` also means inherit for `delivery.enabled`, `delivery.recipients`, `display.columns`, `limits.maxRows`, and `limits.timeoutMs`.\n- `display.title: null` deliberately clears the title. Preserve that null. For any additional field, null is also an explicit value rather than an inheritance instruction.\n- `false`, `0`, an empty string, and an empty array are explicit values. Preserve them rather than falling back.\n- Recursively combine object properties. Arrays replace the entire lower-priority array, including when the replacing array is empty; do not combine array elements.\n- Additional fields follow the same recursive rules and must survive resolution. If every layer has an absent or undefined property, omit it from the result. A null at one of the five inheritance paths also produces no property if no lower layer supplies a value.\n- Do not modify any input. The result must not share mutable objects or arrays with any input, including objects nested inside arrays: subsequent edits to the result must leave all inputs unchanged.\n\nInputs are ordinary JSON-like records containing own enumerable string properties, arrays, strings, numbers, booleans, null, and undefined. Each top-level layer may be omitted or passed as undefined; treat it as an empty record. Nested property types are consistent across layers except for null and undefined. There are no cycles, dates, functions, symbols, or class instances. Do not add schema validation or external dependencies.\n\nPlease implement the function and verify it with checks you consider appropriate.\n",
+        "implementation": "const INHERITING_NULL_PATHS = new Set([\n  'delivery.enabled',\n  'delivery.recipients',\n  'display.columns',\n  'limits.maxRows',\n  'limits.timeoutMs',\n]);\n\nconst MISSING = Symbol('missing');\n\nfunction isRecord(value) {\n  return value !== null && typeof value === 'object' && !Array.isArray(value);\n}\n\nfunction copyValue(value) {\n  if (Array.isArray(value)) {\n    return value.map(copyValue);\n  }\n\n  if (isRecord(value)) {\n    const copy = {};\n    for (const key of Object.keys(value)) {\n      defineValue(copy, key, copyValue(value[key]));\n    }\n    return copy;\n  }\n\n  return value;\n}\n\nfunction defineValue(object, key, value) {\n  // Defining the property avoids treating a JSON field named \"__proto__\"\n  // as a prototype setter.\n  Object.defineProperty(object, key, {\n    value,\n    enumerable: true,\n    configurable: true,\n    writable: true,\n  });\n}\n\nfunction resolveValue(path, values) {\n  let selected = MISSING;\n\n  for (const value of values) {\n    if (value === undefined) continue;\n    if (value === null && INHERITING_NULL_PATHS.has(path)) continue;\n    selected = value;\n    break;\n  }\n\n  if (selected === MISSING) return MISSING;\n\n  if (!isRecord(selected)) return copyValue(selected);\n\n  const keys = new Set();\n  for (const value of values) {\n    if (!isRecord(value)) continue;\n    for (const key of Object.keys(value)) keys.add(key);\n  }\n\n  const result = {};\n  for (const key of keys) {\n    const childValues = values.map((value) =>\n      isRecord(value) && Object.prototype.hasOwnProperty.call(value, key)\n        ? value[key]\n        : undefined,\n    );\n    const childPath = path ? `${path}.${key}` : key;\n    const child = resolveValue(childPath, childValues);\n    if (child !== MISSING) defineValue(result, key, child);\n  }\n\n  return result;\n}\n\n/**\n * Resolve report settings from lowest to highest priority layers.\n *\n * @param {object|undefined} defaults\n * @param {object|undefined} workspace\n * @param {object|undefined} request\n * @returns {object}\n */\nexport function resolveReportSettings(defaults, workspace, request) {\n  const layers = [request, workspace, defaults].map((layer) =>\n    isRecord(layer) ? layer : {},\n  );\n  const result = resolveValue('', layers);\n  return result === MISSING ? {} : result;\n}\n"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": true,
+      "reason": "Actual recorded Luna output."
+    },
+    {
+      "id": "reference-control",
+      "state": {
+        "task": "# Resolve layered report settings\n\nImplement `resolveReportSettings(defaults, workspace, request)` in `candidate.mjs`, exporting it as a named function. Our report service combines a default configuration, saved workspace preferences, and per-request overrides. Return the resolved configuration as a new object.\n\nThe usual configuration contains these six settings:\n\n```js\n{\n  delivery: { enabled: true, recipients: ['ops@example.test'] },\n  display: { title: 'Weekly report', columns: ['name', 'total'] },\n  limits: { maxRows: 100, timeoutMs: 5000 }\n}\n```\n\nUse the following rules consistently at every object depth:\n\n- Precedence is request, then workspace, then defaults.\n- An absent property or a property set to `undefined` inherits from the next lower layer.\n- `null` also means inherit for `delivery.enabled`, `delivery.recipients`, `display.columns`, `limits.maxRows`, and `limits.timeoutMs`.\n- `display.title: null` deliberately clears the title. Preserve that null. For any additional field, null is also an explicit value rather than an inheritance instruction.\n- `false`, `0`, an empty string, and an empty array are explicit values. Preserve them rather than falling back.\n- Recursively combine object properties. Arrays replace the entire lower-priority array, including when the replacing array is empty; do not combine array elements.\n- Additional fields follow the same recursive rules and must survive resolution. If every layer has an absent or undefined property, omit it from the result. A null at one of the five inheritance paths also produces no property if no lower layer supplies a value.\n- Do not modify any input. The result must not share mutable objects or arrays with any input, including objects nested inside arrays: subsequent edits to the result must leave all inputs unchanged.\n\nInputs are ordinary JSON-like records containing own enumerable string properties, arrays, strings, numbers, booleans, null, and undefined. Each top-level layer may be omitted or passed as undefined; treat it as an empty record. Nested property types are consistent across layers except for null and undefined. There are no cycles, dates, functions, symbols, or class instances. Do not add schema validation or external dependencies.\n\nPlease implement the function and verify it with checks you consider appropriate.\n",
+        "implementation": "const inheritNull = new Set([\n  ['delivery', 'enabled'], ['delivery', 'recipients'], ['display', 'columns'],\n  ['limits', 'maxRows'], ['limits', 'timeoutMs'],\n].map(path => JSON.stringify(path)));\nconst record = value => value !== null && typeof value === 'object' && !Array.isArray(value);\nconst clone = value => {\n  if (Array.isArray(value)) return value.map(clone);\n  if (record(value)) return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, clone(v)]));\n  return value;\n};\n\nexport function resolveReportSettings(defaults, workspace, request) {\n  function merge(layers, path) {\n    const keys = new Set(layers.filter(record).flatMap(layer => Object.keys(layer)));\n    const entries = [];\n    for (const key of keys) {\n      const fieldPath = [...path, key];\n      const values = layers.map(layer => record(layer) && Object.hasOwn(layer, key) ? layer[key] : undefined)\n        .filter(value => value !== undefined && !(value === null && inheritNull.has(JSON.stringify(fieldPath))));\n      if (!values.length) continue;\n      const selected = values.at(-1);\n      // An explicit null resets the lower object before subsequent object overrides.\n      const lastNull = values.lastIndexOf(null);\n      const value = record(selected) ? merge(values.slice(lastNull + 1), fieldPath) : clone(selected);\n      entries.push([key, value]);\n    }\n    return Object.fromEntries(entries);\n  }\n  return merge([defaults, workspace, request], []);\n}\n"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "Reference implementation control."
+    },
+    {
+      "id": "defective-joined-path",
+      "state": {
+        "task": "Implement merge(low, high). Recursively merge plain records. Undefined inherits. Null inherits only at nested a \u2192 b; elsewhere null is explicit. Own string keys may contain periods.",
+        "implementation": "function merge(low={},high={},path=''){const out={};for(const k of new Set([...Object.keys(low),...Object.keys(high)])){const p=path?path+'.'+k:k;let v=high[k];if(v===undefined||(v===null&&p==='a.b'))v=low[k];if(v===undefined)continue;out[k]=v&&typeof v==='object'&&!Array.isArray(v)?merge(low[k]&&typeof low[k]==='object'&&!Array.isArray(low[k])?low[k]:{},v,p):v;}return out;}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": true,
+      "reason": "A root key named 'a.b' with null is incorrectly inherited."
+    },
+    {
+      "id": "repaired-segment-path",
+      "state": {
+        "task": "Implement merge(low, high). Recursively merge plain records. Undefined inherits. Null inherits only at nested a \u2192 b; elsewhere null is explicit. Own string keys may contain periods.",
+        "implementation": "function merge(low={},high={},path=[]){const out={};for(const k of new Set([...Object.keys(low),...Object.keys(high)])){const p=[...path,k];let v=high[k];if(v===undefined||(v===null&&p.length===2&&p[0]==='a'&&p[1]==='b'))v=low[k];if(v===undefined)continue;out[k]=v&&typeof v==='object'&&!Array.isArray(v)?merge(low[k]&&typeof low[k]==='object'&&!Array.isArray(low[k])?low[k]:{},v,p):v;}return out;}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "The implementation checks path segments, so a literal 'a.b' key remains distinct."
+    },
+    {
+      "id": "inapplicable-null-contract",
+      "state": {
+        "task": "Merge only the fixed keys a and b. Null inherits at every key. No additional keys are accepted.",
+        "implementation": "function merge(low,high){return {a:high.a??low.a,b:high.b??low.b};}"
+      },
+      "expectedApplicable": false,
+      "expectedViolation": false,
+      "reason": "The task has no explicit-null additional fields or period-containing keys."
+    },
+    {
+      "id": "near-miss-dotted-diagnostic",
+      "state": {
+        "task": "Implement merge(low, high). Recursively merge plain records. Undefined inherits. Null inherits only at nested a \u2192 b; elsewhere null is explicit. Own string keys may contain periods.",
+        "implementation": "function merge(low={},high={},path=[]){const out={};for(const k of new Set([...Object.keys(low),...Object.keys(high)])){const p=[...path,k];const diagnostic=p.join('.');void diagnostic;let v=high[k];if(v===undefined||(v===null&&p.length===2&&p[0]==='a'&&p[1]==='b'))v=low[k];if(v===undefined)continue;out[k]=v&&typeof v==='object'&&!Array.isArray(v)?merge(low[k]&&typeof low[k]==='object'&&!Array.isArray(low[k])?low[k]:{},v,p):v;}return out;}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "A dotted string is formed only for diagnostics; the null rule uses structural segments."
+    }
+  ]
+}

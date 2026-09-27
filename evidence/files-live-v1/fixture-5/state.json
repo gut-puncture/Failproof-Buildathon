@@ -1,0 +1,4 @@
+{
+  "task": "Rename a batch simultaneously; swaps are valid. On one rename failure, restore exact original files.",
+  "implementation": "Stage all sources. On failure, directly undo published moves only when their destinations do not overlap any source name; otherwise re-park every published destination in its original temporary slot before restoring all sources."
+}

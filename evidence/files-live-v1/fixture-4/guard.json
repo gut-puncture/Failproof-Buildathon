@@ -1,0 +1,26 @@
+{
+  "checkId": "batch-rename-rollback-overlap",
+  "version": 1,
+  "checkHash": "c1bf0fea847577ba16b1330be2687c172ba0c3b34f9682042dc4dada99de83c4",
+  "timestamp": "2026-09-27T11:49:57.169Z",
+  "mode": "paired",
+  "thresholds": {
+    "positive": 0.8,
+    "negative": 0.2
+  },
+  "decision": "not_applicable",
+  "scores": {
+    "applicability": 0.02,
+    "violation": 0.34
+  },
+  "rawScores": {
+    "applicability": 0.02,
+    "violation": 0.34
+  },
+  "reasons": {},
+  "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+  "requestHash": "e39ee3c3cf6e6d2719594d08c156b763257f1c13d6c7694b917309c111f9db69",
+  "httpStatus": 200,
+  "reason": "applicability_negative",
+  "elapsedMs": 3381
+}

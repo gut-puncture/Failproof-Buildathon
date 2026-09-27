@@ -1,0 +1,4 @@
+{
+  "task": "Rename a batch simultaneously; swaps are valid. On one rename failure, restore exact original files.",
+  "implementation": "Stage every source in temporary slots; publish in plan order. On failure: for (const m of published) await rename(root(m.to), root(m.from)); then restore unpublished slots."
+}

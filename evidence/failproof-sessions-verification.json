@@ -1,0 +1,39 @@
+{
+  "next_cursor": "2026-09-27 11:51:04.567834|8451354231942892783",
+  "sessions": [
+    {
+      "agent_id": "semantic-check-loop",
+      "agents": [
+        {
+          "agent_id": "semantic-check-loop",
+          "event_count": 4
+        }
+      ],
+      "environment": "hackathon-evidence-import",
+      "event_count": 4,
+      "first_event_id": 2199157248096358292,
+      "last_event_at": "2026-09-27T11:51:31.947724Z",
+      "last_event_id": 6287102247720142381,
+      "latest_evaluation": null,
+      "session_id": "semantic-loop-import-ea23ed4c496550f6990308d9f61d0cde",
+      "started_at": "2026-09-27T11:51:31.944724Z"
+    },
+    {
+      "agent_id": "semantic-check-loop",
+      "agents": [
+        {
+          "agent_id": "semantic-check-loop",
+          "event_count": 4
+        }
+      ],
+      "environment": "hackathon-evidence-import",
+      "event_count": 4,
+      "first_event_id": 8451354231942892783,
+      "last_event_at": "2026-09-27T11:51:04.567834Z",
+      "last_event_id": 8451354231942892783,
+      "latest_evaluation": null,
+      "session_id": "semantic-loop-import-c9725eaf6e755716974c69fec7acbbff",
+      "started_at": "2026-09-27T11:51:04.564834Z"
+    }
+  ]
+}

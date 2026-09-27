@@ -1,0 +1,4 @@
+{
+  "task": "For one item, await promise-returning prepare, then await promise-returning commit and return its result. If commit rejects with any JavaScript value, reject with that exact value.",
+  "implementation": "async function publish(item,{prepare,commit}){const ready=await prepare(item);let failed=false,reason,result;try{result=await commit(ready)}catch(e){failed=true;reason=e}if(failed)throw reason;return result}"
+}

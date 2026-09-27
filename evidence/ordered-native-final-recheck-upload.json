@@ -1,0 +1,11 @@
+{
+  "session_id": "semantic-loop-import-27fb64c64f415733bbbf0008f5595fc5",
+  "event_count": 4,
+  "uploaded": true,
+  "source": "submission/evidence/ordered-native-final-recheck.json",
+  "scope": "Saved verdict metadata import; not a live policy deployment or native evaluation.",
+  "accepted": 4,
+  "skipped": 0,
+  "org_id": "9ba36231-d101-4e4b-8558-a50391eb89e2",
+  "org_slug": "jev-hackathon"
+}

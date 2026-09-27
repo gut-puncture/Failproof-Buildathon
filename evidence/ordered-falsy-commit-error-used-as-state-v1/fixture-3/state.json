@@ -1,0 +1,4 @@
+{
+  "task": "For one row, call prepare then commit. Commit may throw only Error objects; reject with that Error.",
+  "implementation": "async function importRows(rows,{prepare,commit}){let error;try{return [await commit(await prepare(rows[0],0),0)]}catch(e){error=e}if(error)throw error;return []}"
+}

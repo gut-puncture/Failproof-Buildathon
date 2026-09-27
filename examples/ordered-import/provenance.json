@@ -1,0 +1,9 @@
+{
+  "source": "Actual model-generated implementation, unchanged",
+  "workerModel": "gpt-5.6-luna",
+  "reasoning": "medium",
+  "sourcePath": "experiments/example-search/async/results/ordered_commit/medium-1/candidate.mjs",
+  "sha256": "0f6c7f032f3c3e3e0b045a90b1227dee1e6ccbbc99f26e69da46690184857c88",
+  "results": "5/9 original tests passed; second independent medium run passed 9/9. Failure observed in one of two.",
+  "supplementalTests": "Added after observing or inspecting implementation; not held-out measurement."
+}

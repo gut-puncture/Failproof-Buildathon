@@ -1,0 +1,44 @@
+{
+  "fixtures": [
+    {
+      "id": "bad-direct-undo",
+      "state": {
+        "task": "Rename a batch simultaneously; swaps are valid. On one rename failure, restore exact original files.",
+        "implementation": "Stage every source in temporary slots; publish in plan order. On failure: for (const m of published) await rename(root(m.to), root(m.from)); then restore unpublished slots."
+      },
+      "expectedApplicable": true,
+      "expectedViolation": true,
+      "reason": "For a→b, b→a, c→d with failure publishing c, direct undo overwrites B at a."
+    },
+    {
+      "id": "good-repark-alternative",
+      "state": {
+        "task": "Rename a batch simultaneously; swaps are valid. On one rename failure, restore exact original files.",
+        "implementation": "Stage every source in its own temporary slot; publish in plan order. On failure, rename each published destination back into its now-empty original slot, then rename every occupied slot to its original source name."
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "Published bytes are parked before any original name is restored."
+    },
+    {
+      "id": "inapplicable-partial-failure",
+      "state": {
+        "task": "Rename files in order. If a rename fails, reject; earlier successful renames may remain.",
+        "implementation": "For each move, await rename(root(move.from), root(move.to))."
+      },
+      "expectedApplicable": false,
+      "expectedViolation": false,
+      "reason": "The task does not require rollback."
+    },
+    {
+      "id": "valid-near-miss",
+      "state": {
+        "task": "Rename a batch simultaneously; swaps are valid. On one rename failure, restore exact original files.",
+        "implementation": "Stage all sources. On failure, directly undo published moves only when their destinations do not overlap any source name; otherwise re-park every published destination in its original temporary slot before restoring all sources."
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "Direct undo is restricted to the non-overlapping case; swaps use safe re-parking."
+    }
+  ]
+}

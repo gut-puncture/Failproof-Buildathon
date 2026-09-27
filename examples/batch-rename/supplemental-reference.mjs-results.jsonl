@@ -1,0 +1,2 @@
+{"case":"completed-swap-then-failure","before":{"a.txt":"A","b.txt":"B","c.txt":"C"},"after":{"a.txt":"A","b.txt":"B","c.txt":"C"},"injected":true,"sameError":true,"calls":11}
+{"summary":{"total":1,"passed":1,"failed":0}}

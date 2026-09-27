@@ -1,0 +1,10 @@
+{"name":"configuration and empty input invoke no callbacks","passed":true}
+{"name":"preparation refills while commit is pending; commits never overlap","passed":true}
+{"name":"later preparation failure still commits earlier prefix then waits for started tail","passed":true}
+{"name":"earliest input failure wins rather than first rejection in time","passed":true}
+{"name":"earlier commit failure overrides later preparation failure","passed":true}
+{"name":"commit failure stops new starts and consumes late preparation rejection","passed":true}
+{"name":"synchronous preparation throw settles through promises and preserves original error","passed":true}
+{"name":"all success preserves exact prepared values and commit output order","passed":true}
+{"name":"independent imports launched synchronously from callbacks have separate state","passed":true}
+{"summary":{"total":9,"passed":9,"failed":0}}

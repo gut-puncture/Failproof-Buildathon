@@ -1,0 +1,89 @@
+{
+  "audit": {
+    "confirmed": true,
+    "reproduction": "Create a=A, b=B, c=C. Request a→b, b→a, c→d. Make the sixth rename reject before changing anything. The function rejects with the exact injected Error, but the folder ends as b=A, c=C: a and its original contents are gone.",
+    "root_cause": "After publishing a→b and b→a, recovery undoes published moves directly in plan order. Its first rename, b→a, overwrites the original b contents currently at a. The next rename moves A back to b. Recovery must park published files before restoring overlapping original names.",
+    "generic_principle": "A rollback must preserve every value still needed for restoration. When output names overlap original input names, direct inverse operations can destroy those values.",
+    "limitations": [
+      "Verified one injected failure case; this is not a full audit of every failure point."
+    ]
+  },
+  "check": {
+    "id": "batch-rename-rollback-overlap",
+    "version": 1,
+    "requiredInputs": [
+      "task",
+      "implementation"
+    ],
+    "questions": {
+      "applicability": {
+        "instructions": "Answer yes only if the task requires exact rollback after a rename failure and permits overlapping source and destination names such as swaps or cycles.",
+        "criteria": {
+          "true": "Both requirements are explicit.",
+          "false": "Either requirement is absent."
+        }
+      },
+      "violation": {
+        "instructions": "Answer yes only if one permitted rename failure can cause recovery to overwrite or lose an original file while restoring overlapping names.",
+        "criteria": {
+          "true": "A concrete sequence identifies the failure call and incorrect final files or bytes.",
+          "false": "Recovery preserves all originals, or no concrete permitted sequence demonstrates corruption."
+        }
+      },
+      "single": {
+        "instructions": "Answer yes only if the demonstrated corruption follows from one recovery mechanism under valid inputs and the task's single-failure assumption.",
+        "criteria": {
+          "true": "The example needs no second failure, external mutation, or invalid plan.",
+          "false": "The example depends on another defect or an assumption the task excludes."
+        }
+      }
+    },
+    "thresholds": {
+      "positive": 0.8,
+      "negative": 0.2
+    },
+    "feedback": "Report the concrete failing sequence and final state. Accept any recovery strategy that preserves original names and bytes, including re-parking published files before restoration."
+  },
+  "fixtures": [
+    {
+      "id": "bad-direct-undo",
+      "state": {
+        "task": "Rename a batch simultaneously; swaps are valid. On one rename failure, restore exact original files.",
+        "implementation": "Stage every source in temporary slots; publish in plan order. On failure: for (const m of published) await rename(root(m.to), root(m.from)); then restore unpublished slots."
+      },
+      "expectedApplicable": true,
+      "expectedViolation": true,
+      "reason": "For a→b, b→a, c→d with failure publishing c, direct undo overwrites B at a."
+    },
+    {
+      "id": "good-repark-alternative",
+      "state": {
+        "task": "Rename a batch simultaneously; swaps are valid. On one rename failure, restore exact original files.",
+        "implementation": "Stage every source in its own temporary slot; publish in plan order. On failure, rename each published destination back into its now-empty original slot, then rename every occupied slot to its original source name."
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "Published bytes are parked before any original name is restored."
+    },
+    {
+      "id": "inapplicable-partial-failure",
+      "state": {
+        "task": "Rename files in order. If a rename fails, reject; earlier successful renames may remain.",
+        "implementation": "For each move, await rename(root(move.from), root(move.to))."
+      },
+      "expectedApplicable": false,
+      "expectedViolation": false,
+      "reason": "The task does not require rollback."
+    },
+    {
+      "id": "valid-near-miss",
+      "state": {
+        "task": "Rename a batch simultaneously; swaps are valid. On one rename failure, restore exact original files.",
+        "implementation": "Stage all sources. On failure, directly undo published moves only when their destinations do not overlap any source name; otherwise re-park every published destination in its original temporary slot before restoring all sources."
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "Direct undo is restricted to the non-overlapping case; swaps use safe re-parking."
+    }
+  ]
+}

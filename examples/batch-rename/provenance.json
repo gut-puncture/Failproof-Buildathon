@@ -1,0 +1,9 @@
+{
+  "source": "Actual model-generated implementation, unchanged",
+  "workerModel": "gpt-5.6-luna",
+  "reasoning": "medium",
+  "sourcePath": "experiments/example-search/async/results/batch_rename/medium-1/candidate.mjs",
+  "sha256": "96cd6efec35e83f44d20d7fc7993550dd9ebd8beb20d904f671736f232fbaf19",
+  "results": "11/11 original passed; later completed-swap-plus-failure test found file loss. Only one worker run tested.",
+  "supplementalTests": "Added after observing or inspecting implementation; not held-out measurement."
+}

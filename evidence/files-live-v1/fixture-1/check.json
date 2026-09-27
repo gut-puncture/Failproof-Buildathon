@@ -1,0 +1,36 @@
+{
+  "id": "batch-rename-rollback-overlap",
+  "version": 1,
+  "requiredInputs": [
+    "task",
+    "implementation"
+  ],
+  "questions": {
+    "applicability": {
+      "instructions": "Answer yes only if the task requires exact rollback after a rename failure and permits overlapping source and destination names such as swaps or cycles.",
+      "criteria": {
+        "true": "Both requirements are explicit.",
+        "false": "Either requirement is absent."
+      }
+    },
+    "violation": {
+      "instructions": "Answer yes only if one permitted rename failure can cause recovery to overwrite or lose an original file while restoring overlapping names.",
+      "criteria": {
+        "true": "A concrete sequence identifies the failure call and incorrect final files or bytes.",
+        "false": "Recovery preserves all originals, or no concrete permitted sequence demonstrates corruption."
+      }
+    },
+    "single": {
+      "instructions": "Answer yes only if the demonstrated corruption follows from one recovery mechanism under valid inputs and the task's single-failure assumption.",
+      "criteria": {
+        "true": "The example needs no second failure, external mutation, or invalid plan.",
+        "false": "The example depends on another defect or an assumption the task excludes."
+      }
+    }
+  },
+  "thresholds": {
+    "positive": 0.8,
+    "negative": 0.2
+  },
+  "feedback": "Report the concrete failing sequence and final state. Accept any recovery strategy that preserves original names and bytes, including re-parking published files before restoration."
+}

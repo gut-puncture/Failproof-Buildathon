@@ -1,0 +1,34 @@
+{
+  "fixtures": [
+    {
+      "id": "constructed-correct-separate-failure-flag",
+      "state": {
+        "task": "For one item, await promise-returning prepare, then await promise-returning commit and return its result. If commit rejects with any JavaScript value, reject with that exact value.",
+        "implementation": "async function publish(item,{prepare,commit}){const ready=await prepare(item);let failed=false,reason,result;try{result=await commit(ready)}catch(e){failed=true;reason=e}if(failed)throw reason;return result}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "Constructed control: a separate flag preserves falsy rejection reasons."
+    },
+    {
+      "id": "constructed-correct-unrelated-truthiness",
+      "state": {
+        "task": "For one tagged row, await promise-returning prepare and commit. Return the commit result together with whether the row has a truthy tag. Propagate any commit rejection value exactly.",
+        "implementation": "async function importOne(row,{prepare,commit}){const hasTag=Boolean(row.tag);const ready=await prepare(row);const result=await commit(ready);return {result,hasTag}}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "Constructed near-miss: truthiness describes the tag; commit rejection propagates unchanged."
+    },
+    {
+      "id": "constructed-bad-invoice-commit",
+      "state": {
+        "task": "For one invoice, await promise-returning prepare, then await promise-returning commit and return its receipt. If commit rejects with any JavaScript value, reject with that exact value.",
+        "implementation": "async function postInvoice(invoice,{prepare,commit}){const ready=await prepare(invoice);let failure,receipt;try{receipt=await commit(ready)}catch(e){failure=e}if(failure)throw failure;return receipt}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": true,
+      "reason": "Constructed transfer example: a commit rejection of undefined produces fulfillment."
+    }
+  ]
+}

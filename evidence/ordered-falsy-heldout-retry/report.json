@@ -1,0 +1,100 @@
+{
+  "kind": "fixture_evaluation",
+  "results": [
+    {
+      "checkId": "falsy-commit-error-used-as-state",
+      "version": 1,
+      "checkHash": "97dcc1b2878a7b87312b20faa292ae010f6d198b4de419d154557f19de86a41d",
+      "timestamp": "2026-09-27T11:57:29.636Z",
+      "mode": "paired",
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "decision": "no_violation_detected",
+      "scores": {
+        "applicability": 0.96,
+        "violation": 0.04
+      },
+      "rawScores": {
+        "applicability": 0.96,
+        "violation": 0.04
+      },
+      "reasons": {},
+      "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+      "requestHash": "16928f51fbeb88ba82376f8e37dd7c08b7b7371b6eb0328a2a9c95946993b6c1",
+      "httpStatus": 200,
+      "reason": "violation_negative",
+      "elapsedMs": 1455,
+      "fixtureId": "constructed-correct-separate-failure-flag",
+      "expectedViolation": false,
+      "expectedApplicable": true
+    },
+    {
+      "checkId": "falsy-commit-error-used-as-state",
+      "version": 1,
+      "checkHash": "97dcc1b2878a7b87312b20faa292ae010f6d198b4de419d154557f19de86a41d",
+      "timestamp": "2026-09-27T11:57:31.193Z",
+      "mode": "paired",
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "decision": "no_violation_detected",
+      "scores": {
+        "applicability": 0.89,
+        "violation": 0.03
+      },
+      "rawScores": {
+        "applicability": 0.89,
+        "violation": 0.03
+      },
+      "reasons": {},
+      "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+      "requestHash": "f645c9fbc97bb641ffc7c1cf4f3c1c28ffd4f7711679af5e83a0f21226603aab",
+      "httpStatus": 200,
+      "reason": "violation_negative",
+      "elapsedMs": 1553,
+      "fixtureId": "constructed-correct-unrelated-truthiness",
+      "expectedViolation": false,
+      "expectedApplicable": true
+    },
+    {
+      "checkId": "falsy-commit-error-used-as-state",
+      "version": 1,
+      "checkHash": "97dcc1b2878a7b87312b20faa292ae010f6d198b4de419d154557f19de86a41d",
+      "timestamp": "2026-09-27T11:57:32.855Z",
+      "mode": "paired",
+      "thresholds": {
+        "positive": 0.8,
+        "negative": 0.2
+      },
+      "decision": "violation_detected",
+      "scores": {
+        "applicability": 0.92,
+        "violation": 0.8
+      },
+      "rawScores": {
+        "applicability": 0.92,
+        "violation": 0.8
+      },
+      "reasons": {},
+      "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+      "requestHash": "6d347beef2a8cae153ae63add9aab7732db5b3d6239b787979915b02172cd4ce",
+      "httpStatus": 200,
+      "reason": "violation_positive",
+      "elapsedMs": 2399,
+      "fixtureId": "constructed-bad-invoice-commit",
+      "expectedViolation": true,
+      "expectedApplicable": true
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "unchecked": 0,
+    "missedBugs": 0,
+    "falseAlarms": 0
+  },
+  "decision": "violation_detected",
+  "scope": "Results apply only to supplied fixtures."
+}

@@ -1,0 +1,4 @@
+{
+  "task": "Rename files in order. If a rename fails, reject; earlier successful renames may remain.",
+  "implementation": "For each move, await rename(root(move.from), root(move.to))."
+}

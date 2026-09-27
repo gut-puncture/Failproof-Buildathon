@@ -1,0 +1,11 @@
+Implemented `resolveReportSettings` in [candidate.mjs](/private/tmp/coding-task-ip6p6277/candidate.mjs).
+
+Verified:
+
+- Layer precedence and undefined inheritance
+- Special `null` inheritance rules
+- Explicit falsy values
+- Recursive object merging and array replacement
+- Additional fields
+- Deep cloning without input mutation or shared nested references
+- Syntax validity via `node --check`

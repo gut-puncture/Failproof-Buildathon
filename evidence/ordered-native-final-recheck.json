@@ -1,0 +1,36 @@
+{
+  "checkId": "falsy-commit-error-used-as-state",
+  "version": 1,
+  "checkHash": "97dcc1b2878a7b87312b20faa292ae010f6d198b4de419d154557f19de86a41d",
+  "timestamp": "2026-09-27T12:00:03.578Z",
+  "mode": "paired",
+  "thresholds": {
+    "positive": 0.8,
+    "negative": 0.2
+  },
+  "decision": "no_violation_detected",
+  "scores": {
+    "applicability": 0.93,
+    "violation": 0.08
+  },
+  "rawScores": {
+    "applicability": 0.93,
+    "violation": 0.08
+  },
+  "reasons": {},
+  "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+  "requestHash": "5391ed14d6983a6e2566d4f50e95b7f3bef8b79cb7a72394ee87464b5fbf7470",
+  "httpStatus": 200,
+  "reason": "violation_negative",
+  "elapsedMs": 2569,
+  "nativePolicy": {
+    "engine": "failproofai",
+    "version": "1.0.8-beta.0",
+    "policyName": "reusable-semantic-check",
+    "decision": "allow",
+    "engineDecision": "allow",
+    "exitCode": 0,
+    "reason": "Note from failproofai: semantic_candidate_gate: The supplied check allows this candidate. This is not a proof of overall correctness.",
+    "enforcementPoint": "Explicit custom-harness candidate acceptance via PreToolUse"
+  }
+}

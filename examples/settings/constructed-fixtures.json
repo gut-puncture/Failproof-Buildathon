@@ -1,0 +1,44 @@
+{
+  "fixtures": [
+    {
+      "id": "defective-joined-path",
+      "state": {
+        "task": "Implement merge(low, high). Recursively merge plain records. Undefined inherits. Null inherits only at nested a → b; elsewhere null is explicit. Own string keys may contain periods.",
+        "implementation": "function merge(low={},high={},path=''){const out={};for(const k of new Set([...Object.keys(low),...Object.keys(high)])){const p=path?path+'.'+k:k;let v=high[k];if(v===undefined||(v===null&&p==='a.b'))v=low[k];if(v===undefined)continue;out[k]=v&&typeof v==='object'&&!Array.isArray(v)?merge(low[k]&&typeof low[k]==='object'&&!Array.isArray(low[k])?low[k]:{},v,p):v;}return out;}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": true,
+      "reason": "A root key named 'a.b' with null is incorrectly inherited."
+    },
+    {
+      "id": "repaired-segment-path",
+      "state": {
+        "task": "Implement merge(low, high). Recursively merge plain records. Undefined inherits. Null inherits only at nested a → b; elsewhere null is explicit. Own string keys may contain periods.",
+        "implementation": "function merge(low={},high={},path=[]){const out={};for(const k of new Set([...Object.keys(low),...Object.keys(high)])){const p=[...path,k];let v=high[k];if(v===undefined||(v===null&&p.length===2&&p[0]==='a'&&p[1]==='b'))v=low[k];if(v===undefined)continue;out[k]=v&&typeof v==='object'&&!Array.isArray(v)?merge(low[k]&&typeof low[k]==='object'&&!Array.isArray(low[k])?low[k]:{},v,p):v;}return out;}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "The implementation checks path segments, so a literal 'a.b' key remains distinct."
+    },
+    {
+      "id": "inapplicable-null-contract",
+      "state": {
+        "task": "Merge only the fixed keys a and b. Null inherits at every key. No additional keys are accepted.",
+        "implementation": "function merge(low,high){return {a:high.a??low.a,b:high.b??low.b};}"
+      },
+      "expectedApplicable": false,
+      "expectedViolation": false,
+      "reason": "The task has no explicit-null additional fields or period-containing keys."
+    },
+    {
+      "id": "near-miss-dotted-diagnostic",
+      "state": {
+        "task": "Implement merge(low, high). Recursively merge plain records. Undefined inherits. Null inherits only at nested a → b; elsewhere null is explicit. Own string keys may contain periods.",
+        "implementation": "function merge(low={},high={},path=[]){const out={};for(const k of new Set([...Object.keys(low),...Object.keys(high)])){const p=[...path,k];const diagnostic=p.join('.');void diagnostic;let v=high[k];if(v===undefined||(v===null&&p.length===2&&p[0]==='a'&&p[1]==='b'))v=low[k];if(v===undefined)continue;out[k]=v&&typeof v==='object'&&!Array.isArray(v)?merge(low[k]&&typeof low[k]==='object'&&!Array.isArray(low[k])?low[k]:{},v,p):v;}return out;}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "A dotted string is formed only for diagnostics; the null rule uses structural segments."
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "checkId": "batch-rename-rollback-overlap",
+  "version": 1,
+  "checkHash": "c1bf0fea847577ba16b1330be2687c172ba0c3b34f9682042dc4dada99de83c4",
+  "timestamp": "2026-09-27T11:55:47.054Z",
+  "mode": "paired",
+  "thresholds": {
+    "positive": 0.8,
+    "negative": 0.2
+  },
+  "decision": "unchecked",
+  "scores": {},
+  "rawScores": {},
+  "reasons": {},
+  "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+  "reason": "missing_required_context",
+  "elapsedMs": 0,
+  "nativePolicy": {
+    "engine": "failproofai",
+    "version": "1.0.8-beta.0",
+    "policyName": "reusable-semantic-check",
+    "decision": "unchecked",
+    "engineDecision": "deny",
+    "exitCode": 0,
+    "reason": "Blocked semantic_submit_candidate by failproofai because: semantic_candidate_gate: Check is unresolved; review before accepting the candidate., as per the policy configured by the user",
+    "enforcementPoint": "Explicit custom-harness candidate acceptance via PreToolUse"
+  }
+}

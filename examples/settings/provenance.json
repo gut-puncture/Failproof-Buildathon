@@ -1,0 +1,9 @@
+{
+  "source": "Actual model-generated implementation, unchanged",
+  "workerModel": "gpt-5.6-luna",
+  "reasoning": "medium",
+  "sourcePath": "experiments/results/values/medium-1/candidate.mjs",
+  "sha256": "9df6bf9cd6561e3a7fd4b7b49e2876425d397c2a7f7ee190076a6262b7fafc1f",
+  "results": "13 original passed; 6 of 7 supplemental failed. Same class found on five initial runs (two low, three medium).",
+  "supplementalTests": "Added after observing or inspecting implementation; not held-out measurement."
+}

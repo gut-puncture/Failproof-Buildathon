@@ -1,0 +1,33 @@
+{
+  "kind": "candidate_check",
+  "decision": "unchecked",
+  "results": [
+    {
+      "decision": "unchecked",
+      "reason": "native_policy_unavailable_or_unchecked",
+      "nativePolicy": {
+        "engine": "failproofai",
+        "decision": "unchecked"
+      }
+    }
+  ],
+  "scope": "Supplied checks and explicit context only; not a proof of program correctness.",
+  "beforeTests": [
+    {
+      "suite": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/examples/ordered-import/tests.mjs",
+      "candidate": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/examples/ordered-import/candidate.mjs",
+      "exitCode": 1,
+      "status": "failed"
+    },
+    {
+      "suite": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/examples/ordered-import/supplemental-tests.mjs",
+      "candidate": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/examples/ordered-import/candidate.mjs",
+      "exitCode": 1,
+      "status": "failed"
+    }
+  ],
+  "correction": {
+    "outcome": "not_attempted",
+    "reason": "no_detected_violation"
+  }
+}

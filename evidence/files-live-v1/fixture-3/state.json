@@ -1,0 +1,4 @@
+{
+  "task": "Rename a batch simultaneously; swaps are valid. On one rename failure, restore exact original files.",
+  "implementation": "Stage every source in its own temporary slot; publish in plan order. On failure, rename each published destination back into its now-empty original slot, then rename every occupied slot to its original source name."
+}

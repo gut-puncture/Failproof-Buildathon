@@ -1,0 +1,36 @@
+{
+  "id": "ordered-import-await-started-callbacks",
+  "version": 1,
+  "requiredInputs": [
+    "task",
+    "implementation"
+  ],
+  "questions": {
+    "applicability": {
+      "instructions": "Does state.task require the returned promise to remain pending until every callback already started by that invocation settles?",
+      "criteria": {
+        "true": "The task explicitly requires waiting for all started callbacks, including after a failure.",
+        "false": "The task permits early settlement or does not specify this requirement."
+      }
+    },
+    "violation": {
+      "instructions": "Does state.implementation have a reachable path that resolves or rejects the returned promise while a callback it started remains unsettled?",
+      "criteria": {
+        "true": "A terminal path can run with a started callback still pending.",
+        "false": "Every terminal path waits for all started callbacks to settle."
+      }
+    },
+    "single": {
+      "instructions": "Does state.task require waiting for all started callbacks, and does state.implementation nevertheless allow its returned promise to settle while one remains pending?",
+      "criteria": {
+        "true": "Both the requirement and a reachable premature-settlement path are present.",
+        "false": "Either the requirement is absent or every terminal path waits."
+      }
+    }
+  },
+  "thresholds": {
+    "positive": 0.8,
+    "negative": 0.2
+  },
+  "feedback": "Check the actual terminal guard for pending started callbacks; counting a callback as started does not mean it has settled."
+}

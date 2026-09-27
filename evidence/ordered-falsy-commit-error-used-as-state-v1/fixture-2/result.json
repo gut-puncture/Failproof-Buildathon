@@ -1,0 +1,26 @@
+{
+  "checkId": "falsy-commit-error-used-as-state",
+  "version": 1,
+  "checkHash": "97dcc1b2878a7b87312b20faa292ae010f6d198b4de419d154557f19de86a41d",
+  "timestamp": "2026-09-27T11:51:04.612Z",
+  "mode": "paired",
+  "thresholds": {
+    "positive": 0.8,
+    "negative": 0.2
+  },
+  "decision": "violation_detected",
+  "scores": {
+    "applicability": 0.91,
+    "violation": 0.82
+  },
+  "rawScores": {
+    "applicability": 0.91,
+    "violation": 0.82
+  },
+  "reasons": {},
+  "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+  "requestHash": "eeb76127333653f39a2879925272db0161ab9c4326821903e9168c16bb49b7f5",
+  "httpStatus": 200,
+  "reason": "violation_positive",
+  "elapsedMs": 1393
+}

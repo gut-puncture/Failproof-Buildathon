@@ -1,0 +1,26 @@
+{
+  "checkId": "structural-path-null-inheritance",
+  "version": 1,
+  "checkHash": "0619f80d1996ba0ce3d6b780756bd37c312a9215fcf0ef44d186b794455133cb",
+  "timestamp": "2026-09-27T11:49:59.682Z",
+  "mode": "paired",
+  "thresholds": {
+    "positive": 0.8,
+    "negative": 0.2
+  },
+  "decision": "not_applicable",
+  "scores": {
+    "applicability": 0.04,
+    "violation": 0.11
+  },
+  "rawScores": {
+    "applicability": 0.04,
+    "violation": 0.11
+  },
+  "reasons": {},
+  "scope": "One candidate semantic check; no claim that the entire implementation is correct.",
+  "requestHash": "fede7b6ca51a12f5d020295b81896265b6f61858f9903afbd0f7b17581a04069",
+  "httpStatus": 200,
+  "reason": "applicability_negative",
+  "elapsedMs": 3067
+}

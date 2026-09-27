@@ -1,0 +1,90 @@
+{
+  "audit": {
+    "confirmed": true,
+    "reproduction": "Using the supplied implementation with concurrency 2, let prepare(0) remain pending and prepare(1) reject. The returned promise rejects before prepare(0) settles; the task requires waiting for every started callback. A success-path check also resolved before prepare(1) settled, returning an array without its commit result.",
+    "root_cause": "maybeFinish treats `preparedSettled + preparing === nextToStart` as a settlement test. That equality also holds while preparations remain pending, so it can finish too early.",
+    "generic_principle": "A terminal condition must verify that no started callback remains in flight and that all required commits have completed.",
+    "limitations": [
+      "The reproduction used a local transcription of the supplied code with HTML entities decoded.",
+      "This audit focuses on premature settlement; it does not assess every other rule."
+    ]
+  },
+  "check": {
+    "id": "ordered-import-await-started-callbacks",
+    "version": 1,
+    "requiredInputs": [
+      "task",
+      "implementation"
+    ],
+    "questions": {
+      "applicability": {
+        "instructions": "Does state.task require the returned promise to remain pending until every callback already started by that invocation settles?",
+        "criteria": {
+          "true": "The task explicitly requires waiting for all started callbacks, including after a failure.",
+          "false": "The task permits early settlement or does not specify this requirement."
+        }
+      },
+      "violation": {
+        "instructions": "Does state.implementation have a reachable path that resolves or rejects the returned promise while a callback it started remains unsettled?",
+        "criteria": {
+          "true": "A terminal path can run with a started callback still pending.",
+          "false": "Every terminal path waits for all started callbacks to settle."
+        }
+      },
+      "single": {
+        "instructions": "Does state.task require waiting for all started callbacks, and does state.implementation nevertheless allow its returned promise to settle while one remains pending?",
+        "criteria": {
+          "true": "Both the requirement and a reachable premature-settlement path are present.",
+          "false": "Either the requirement is absent or every terminal path waits."
+        }
+      }
+    },
+    "thresholds": {
+      "positive": 0.8,
+      "negative": 0.2
+    },
+    "feedback": "Check the actual terminal guard for pending started callbacks; counting a callback as started does not mean it has settled."
+  },
+  "fixtures": [
+    {
+      "id": "constructed-defective",
+      "state": {
+        "task": "For nonempty rows, call promise-returning prepare once per row and return ordered results. On failure, reject only after every started prepare settles.",
+        "implementation": "function importRows(rows,{prepare}){return Promise.all(rows.map((r,i)=>prepare(r,i)))}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": true,
+      "reason": "Constructed test: Promise.all can reject while another preparation remains pending."
+    },
+    {
+      "id": "constructed-repaired-alternative",
+      "state": {
+        "task": "For nonempty rows, call promise-returning prepare once per row and return ordered results. On failure, reject only after every started prepare settles.",
+        "implementation": "function importRows(rows,{prepare}){return Promise.allSettled(rows.map((r,i)=>prepare(r,i))).then(s=>{const f=s.find(x=>x.status==='rejected');if(f)throw f.reason;return s.map(x=>x.value)})}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "Constructed test: all preparations settle before either outcome is reported."
+    },
+    {
+      "id": "constructed-inapplicable",
+      "state": {
+        "task": "Call promise-returning prepare for each row. Reject immediately when any preparation fails; pending preparations may continue.",
+        "implementation": "function importRows(rows,{prepare}){return Promise.all(rows.map((r,i)=>prepare(r,i)))}"
+      },
+      "expectedApplicable": false,
+      "expectedViolation": false,
+      "reason": "Constructed test: this different contract expressly permits early rejection."
+    },
+    {
+      "id": "constructed-correct-near-miss",
+      "state": {
+        "task": "For nonempty rows, call promise-returning prepare once per row and return ordered results. On failure, reject only after every started prepare settles.",
+        "implementation": "function importRows(rows,{prepare}){let started=rows.length,active=started,settled=0,failed=false,error;const values=[];return new Promise((resolve,reject)=>rows.forEach((r,i)=>prepare(r,i).then(v=>{values[i]=v},e=>{failed=true;error=e}).then(()=>{active--;settled++;if(settled+active===started&&active===0)failed?reject(error):resolve(values)})))}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "Constructed test: it has the same accounting equality, but explicitly requires zero active callbacks before settling."
+    }
+  ]
+}

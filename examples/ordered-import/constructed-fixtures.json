@@ -1,0 +1,44 @@
+{
+  "fixtures": [
+    {
+      "id": "constructed-defective",
+      "state": {
+        "task": "For nonempty rows, call promise-returning prepare once per row and return ordered results. On failure, reject only after every started prepare settles.",
+        "implementation": "function importRows(rows,{prepare}){return Promise.all(rows.map((r,i)=>prepare(r,i)))}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": true,
+      "reason": "Constructed test: Promise.all can reject while another preparation remains pending."
+    },
+    {
+      "id": "constructed-repaired-alternative",
+      "state": {
+        "task": "For nonempty rows, call promise-returning prepare once per row and return ordered results. On failure, reject only after every started prepare settles.",
+        "implementation": "function importRows(rows,{prepare}){return Promise.allSettled(rows.map((r,i)=>prepare(r,i))).then(s=>{const f=s.find(x=>x.status==='rejected');if(f)throw f.reason;return s.map(x=>x.value)})}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "Constructed test: all preparations settle before either outcome is reported."
+    },
+    {
+      "id": "constructed-inapplicable",
+      "state": {
+        "task": "Call promise-returning prepare for each row. Reject immediately when any preparation fails; pending preparations may continue.",
+        "implementation": "function importRows(rows,{prepare}){return Promise.all(rows.map((r,i)=>prepare(r,i)))}"
+      },
+      "expectedApplicable": false,
+      "expectedViolation": false,
+      "reason": "Constructed test: this different contract expressly permits early rejection."
+    },
+    {
+      "id": "constructed-correct-near-miss",
+      "state": {
+        "task": "For nonempty rows, call promise-returning prepare once per row and return ordered results. On failure, reject only after every started prepare settles.",
+        "implementation": "function importRows(rows,{prepare}){let started=rows.length,active=started,settled=0,failed=false,error;const values=[];return new Promise((resolve,reject)=>rows.forEach((r,i)=>prepare(r,i).then(v=>{values[i]=v},e=>{failed=true;error=e}).then(()=>{active--;settled++;if(settled+active===started&&active===0)failed?reject(error):resolve(values)})))}"
+      },
+      "expectedApplicable": true,
+      "expectedViolation": false,
+      "reason": "Constructed test: it has the same accounting equality, but explicitly requires zero active callbacks before settling."
+    }
+  ]
+}

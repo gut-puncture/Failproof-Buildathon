@@ -1,0 +1,4 @@
+{
+  "task": "Implement merge(low, high). Recursively merge plain records. Undefined inherits. Null inherits only at nested a \u2192 b; elsewhere null is explicit. Own string keys may contain periods.",
+  "implementation": "function merge(low={},high={},path=[]){const out={};for(const k of new Set([...Object.keys(low),...Object.keys(high)])){const p=[...path,k];let v=high[k];if(v===undefined||(v===null&&p.length===2&&p[0]==='a'&&p[1]==='b'))v=low[k];if(v===undefined)continue;out[k]=v&&typeof v==='object'&&!Array.isArray(v)?merge(low[k]&&typeof low[k]==='object'&&!Array.isArray(low[k])?low[k]:{},v,p):v;}return out;}"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "failure-to-check-native-gate",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Explicit Failproof native policy gate for reusable semantic checks",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "dependencies": {
+    "failproofai": "1.0.8-beta.0"
+  }
+}

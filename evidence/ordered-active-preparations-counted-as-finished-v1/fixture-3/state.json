@@ -1,0 +1,4 @@
+{
+  "task": "For nonempty tasks, invoke every promise-returning callback and wait for all started callbacks to settle before resolving or rejecting.",
+  "implementation": "function run(tasks){return Promise.allSettled(tasks.map(t=>t())).then(out=>{const failure=out.find(x=>x.status==='rejected');if(failure)throw failure.reason;return out.map(x=>x.value)})}"
+}

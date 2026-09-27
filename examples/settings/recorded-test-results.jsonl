@@ -1,0 +1,14 @@
+{"name":"control: ordinary overrides preserve unrelated nested defaults","passed":true}
+{"name":"missing layers and undefined properties inherit; undefined-only properties are omitted","passed":true}
+{"name":"delivery.enabled=false overrides true without removing recipients","passed":true}
+{"name":"limits.maxRows=0 and limits.timeoutMs=0 survive both precedence levels","passed":true}
+{"name":"display.title empty string is an explicit title","passed":true}
+{"name":"display.title null clears the title instead of inheriting","passed":true}
+{"name":"null at five inheritance paths falls through to workspace, including false and zero","passed":true}
+{"name":"null inheritance skips multiple layers and omits values absent everywhere","passed":true}
+{"name":"empty arrays replace recipients and columns completely","passed":true}
+{"name":"nonempty arrays replace rather than merge by position","passed":true}
+{"name":"additional nested fields preserve false, zero, empty string and explicit null","passed":true}
+{"name":"resolution itself never mutates any input layer","passed":true}
+{"name":"result edits cannot mutate source objects, arrays, or objects within arrays","passed":true}
+{"summary":{"total":13,"passed":13,"failed":0}}

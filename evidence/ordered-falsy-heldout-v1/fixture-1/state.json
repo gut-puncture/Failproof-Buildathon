@@ -1,0 +1,4 @@
+{
+  "task": "For one tagged row, await promise-returning prepare and commit. Return the commit result together with whether the row has a truthy tag. Propagate any commit rejection value exactly.",
+  "implementation": "async function importOne(row,{prepare,commit}){const hasTag=Boolean(row.tag);const ready=await prepare(row);const result=await commit(ready);return {result,hasTag}}"
+}
