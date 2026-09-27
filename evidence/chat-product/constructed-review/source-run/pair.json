@@ -1,0 +1,4 @@
+{
+  "human_message": "Summarize these investigation notes faithfully in two sentences. Orion: a battery fault is possible, and inspection is pending. Lyra: inspection ruled out a battery fault.",
+  "worker_response": "Orion has a confirmed battery fault. Lyra's inspection ruled out a battery fault."
+}

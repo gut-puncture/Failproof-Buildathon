@@ -1,0 +1,20 @@
+{
+  "kind": "constructed_test_request",
+  "purpose": "turn/session isolation and dynamic policy discovery",
+  "argv": [
+    "/Applications/ChatGPT.app/Contents/Resources/codex-cli/bin/codex",
+    "--no-daemon",
+    "exec",
+    "--json",
+    "-m",
+    "gpt-6-astra",
+    "-c",
+    "model_reasoning_effort=\"xhigh\"",
+    "-s",
+    "read-only",
+    "-o",
+    "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/fresh-chat/final.txt",
+    "Summarize this source faithfully in one sentence: \"CROSS_CHAT_\ud83d\udfe3: a sensor fault is possible; inspection is pending.\" Keep the marker in the summary. Do not use tools."
+  ],
+  "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project"
+}

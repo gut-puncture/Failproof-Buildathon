@@ -1,0 +1,4 @@
+{
+  "human_message": "Summarize this source faithfully in one sentence: \"CROSS_CHAT_🟣: a sensor fault is possible; inspection is pending.\" Keep the marker in the summary. Do not use tools.",
+  "worker_response": "CROSS_CHAT_🟣: A sensor fault is possible, and inspection is pending."
+}

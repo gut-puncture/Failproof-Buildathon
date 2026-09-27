@@ -1,8 +1,8 @@
 {
-  "name": "failure-to-check-native-gate",
-  "version": "0.1.0",
+  "name": "failure-to-check",
+  "version": "0.2.0",
   "private": true,
-  "description": "Explicit Failproof native policy gate for reusable semantic checks",
+  "description": "Project-local advisory checks learned from real Codex chats",
   "engines": {
     "node": ">=22.22.0"
   },

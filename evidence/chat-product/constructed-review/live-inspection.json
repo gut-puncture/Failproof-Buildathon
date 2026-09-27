@@ -1,0 +1,340 @@
+{
+  "schemaVersion": 1,
+  "kind": "offline_inspection_of_saved_live_sanity",
+  "createdAt": "2026-09-27T16:34:51.406Z",
+  "sourceRunId": "93cded109e55d70f7c501d5d14ee0de2b85a50a740c9704e32110bf6fcc941cf",
+  "constructedProvenance": true,
+  "newServiceCalls": 0,
+  "policyUnchanged": true,
+  "caseCount": 6,
+  "verifiedNativeResults": 6,
+  "sharedThresholds": {
+    "no": 0.2,
+    "yes": 0.8
+  },
+  "allDeclaredRequestsPreserved": true,
+  "expectedLabelsAndProvenanceExcludedFromRequests": true,
+  "allCombinedDecisionsMatchExpectations": true,
+  "errors": [],
+  "mismatchCount": 1,
+  "entries": [
+    {
+      "id": "seeded-replay-exact",
+      "scores": {
+        "applicability": 0.98,
+        "evidenceSufficiency": 0.96,
+        "questions": [
+          0.98
+        ]
+      },
+      "actualLabels": {
+        "applicability": "yes",
+        "evidenceSufficiency": "yes",
+        "questions": [
+          "yes"
+        ]
+      },
+      "expected": {
+        "applicability": "yes",
+        "evidenceSufficiency": "yes",
+        "questions": [
+          "yes"
+        ],
+        "policyDecision": "advisory",
+        "aggregateDecision": "advisory"
+      },
+      "mismatches": [],
+      "policyDecision": "advisory",
+      "reason": "conjunction_positive",
+      "aggregateDecision": "advisory",
+      "suggestionCount": 1,
+      "native": {
+        "engine": "failproofai",
+        "version": "1.0.8-beta.0",
+        "policyName": "reusable-semantic-check",
+        "invoked": true,
+        "verified": true,
+        "decision": "deny",
+        "engineDecision": "deny",
+        "exitCode": 0
+      },
+      "model": "jev-1.13.0",
+      "httpStatus": 200,
+      "elapsedMs": 2352,
+      "requestHash": "25327244f0006b271e71300c553aa23139364e4d4a6dbb0d3ae81f25504cec97",
+      "requestAndInputMatch": true,
+      "errors": []
+    },
+    {
+      "id": "faithful-paraphrase",
+      "scores": {
+        "applicability": 0.99,
+        "evidenceSufficiency": 0.97,
+        "questions": [
+          0.06
+        ]
+      },
+      "actualLabels": {
+        "applicability": "yes",
+        "evidenceSufficiency": "yes",
+        "questions": [
+          "no"
+        ]
+      },
+      "expected": {
+        "applicability": "yes",
+        "evidenceSufficiency": "yes",
+        "questions": [
+          "no"
+        ],
+        "policyDecision": "no_concern_detected",
+        "aggregateDecision": "quiet"
+      },
+      "mismatches": [],
+      "policyDecision": "no_concern_detected",
+      "reason": "conjunction_negative",
+      "aggregateDecision": "quiet",
+      "suggestionCount": 0,
+      "native": {
+        "engine": "failproofai",
+        "version": "1.0.8-beta.0",
+        "policyName": "reusable-semantic-check",
+        "invoked": true,
+        "verified": true,
+        "decision": "allow",
+        "engineDecision": "allow",
+        "exitCode": 0
+      },
+      "model": "jev-1.13.0",
+      "httpStatus": 200,
+      "elapsedMs": 2239,
+      "requestHash": "007629cb7f1f2b9c9af1684a3e12a3e9dd4a3f16cd0799d4d40682cb5dc740dd",
+      "requestAndInputMatch": true,
+      "errors": []
+    },
+    {
+      "id": "different-subject-certainty",
+      "scores": {
+        "applicability": 0.99,
+        "evidenceSufficiency": 0.97,
+        "questions": [
+          0.05
+        ]
+      },
+      "actualLabels": {
+        "applicability": "yes",
+        "evidenceSufficiency": "yes",
+        "questions": [
+          "no"
+        ]
+      },
+      "expected": {
+        "applicability": "yes",
+        "evidenceSufficiency": "yes",
+        "questions": [
+          "no"
+        ],
+        "policyDecision": "no_concern_detected",
+        "aggregateDecision": "quiet"
+      },
+      "mismatches": [],
+      "policyDecision": "no_concern_detected",
+      "reason": "conjunction_negative",
+      "aggregateDecision": "quiet",
+      "suggestionCount": 0,
+      "native": {
+        "engine": "failproofai",
+        "version": "1.0.8-beta.0",
+        "policyName": "reusable-semantic-check",
+        "invoked": true,
+        "verified": true,
+        "decision": "allow",
+        "engineDecision": "allow",
+        "exitCode": 0
+      },
+      "model": "jev-1.13.0",
+      "httpStatus": 200,
+      "elapsedMs": 2090,
+      "requestHash": "134918698796d64266eac85ae990af23ba3c81592479da3af48458e99c709a8b",
+      "requestAndInputMatch": true,
+      "errors": []
+    },
+    {
+      "id": "supplied-resolution",
+      "scores": {
+        "applicability": 0.98,
+        "evidenceSufficiency": 0.95,
+        "questions": [
+          0.06
+        ]
+      },
+      "actualLabels": {
+        "applicability": "yes",
+        "evidenceSufficiency": "yes",
+        "questions": [
+          "no"
+        ]
+      },
+      "expected": {
+        "applicability": "yes",
+        "evidenceSufficiency": "yes",
+        "questions": [
+          "no"
+        ],
+        "policyDecision": "no_concern_detected",
+        "aggregateDecision": "quiet"
+      },
+      "mismatches": [],
+      "policyDecision": "no_concern_detected",
+      "reason": "conjunction_negative",
+      "aggregateDecision": "quiet",
+      "suggestionCount": 0,
+      "native": {
+        "engine": "failproofai",
+        "version": "1.0.8-beta.0",
+        "policyName": "reusable-semantic-check",
+        "invoked": true,
+        "verified": true,
+        "decision": "allow",
+        "engineDecision": "allow",
+        "exitCode": 0
+      },
+      "model": "jev-1.13.0",
+      "httpStatus": 200,
+      "elapsedMs": 1785,
+      "requestHash": "e36cffc8b822f2340e2abf7917ff1fef67ec3dfc07d4708c8c49d653abb515e5",
+      "requestAndInputMatch": true,
+      "errors": []
+    },
+    {
+      "id": "authorized-fictional-change",
+      "scores": {
+        "applicability": 0.05,
+        "evidenceSufficiency": 0.96,
+        "questions": [
+          0.93
+        ]
+      },
+      "actualLabels": {
+        "applicability": "no",
+        "evidenceSufficiency": "yes",
+        "questions": [
+          "yes"
+        ]
+      },
+      "expected": {
+        "applicability": "no",
+        "evidenceSufficiency": "yes",
+        "questions": [
+          "yes"
+        ],
+        "policyDecision": "unchecked",
+        "aggregateDecision": "unchecked"
+      },
+      "mismatches": [],
+      "policyDecision": "unchecked",
+      "reason": "inapplicable",
+      "aggregateDecision": "unchecked",
+      "suggestionCount": 0,
+      "native": {
+        "engine": "failproofai",
+        "version": "1.0.8-beta.0",
+        "policyName": "reusable-semantic-check",
+        "invoked": true,
+        "verified": true,
+        "decision": "allow",
+        "engineDecision": "allow",
+        "exitCode": 0
+      },
+      "model": "jev-1.13.0",
+      "httpStatus": 200,
+      "elapsedMs": 1863,
+      "requestHash": "6c9ab3decb8c106a21a88b2960b76defca8e2cc554be1a92fb275030e8f83f4d",
+      "requestAndInputMatch": true,
+      "errors": []
+    },
+    {
+      "id": "unseen-source",
+      "scores": {
+        "applicability": 0.98,
+        "evidenceSufficiency": 0.07,
+        "questions": [
+          0.4
+        ]
+      },
+      "actualLabels": {
+        "applicability": "yes",
+        "evidenceSufficiency": "no",
+        "questions": [
+          "uncertain"
+        ]
+      },
+      "expected": {
+        "applicability": "yes",
+        "evidenceSufficiency": "no",
+        "questions": [
+          "no"
+        ],
+        "policyDecision": "unchecked",
+        "aggregateDecision": "unchecked"
+      },
+      "mismatches": [
+        {
+          "field": "questions",
+          "expected": [
+            "no"
+          ],
+          "actual": [
+            "uncertain"
+          ]
+        }
+      ],
+      "policyDecision": "unchecked",
+      "reason": "insufficient_evidence",
+      "aggregateDecision": "unchecked",
+      "suggestionCount": 0,
+      "native": {
+        "engine": "failproofai",
+        "version": "1.0.8-beta.0",
+        "policyName": "reusable-semantic-check",
+        "invoked": true,
+        "verified": true,
+        "decision": "allow",
+        "engineDecision": "allow",
+        "exitCode": 0
+      },
+      "model": "jev-1.13.0",
+      "httpStatus": 200,
+      "elapsedMs": 1888,
+      "requestHash": "b3f16a6c2b367950a19ed343494df3ad06beb47a9500252c20eb20016b77f295",
+      "requestAndInputMatch": true,
+      "errors": []
+    }
+  ],
+  "preservedHashes": {
+    "assessment.json": "7fe2c40201f768d0e2a5aff0814c13d2f645f48ca9eb9973cd70e920c278d7c9",
+    "policy.json": "6144617d6e9539363a7dabe9a75589a4000309ef47f433fe91718da5394792c0",
+    "cases.json": "8e2aadef60a0a7084e2a99464c01f930b3ee22fb3eae70359b57f640611c1162",
+    "README.md": "e26d7346a297386f505245639d368b96f9fb6ca104a4565f57087f9607057509",
+    "provenance-disclosure.json": "b7e1d54d6900acb7aa02d2252731119dbffe8c4c73690f417c1dfb12dd94e055",
+    "source-run/pair.json": "1e7277688c74d87211be227ac736938226463a94b8afa3837da7396cd4060237",
+    "source-run/provenance.json": "9c83c604c83fd5965097a24392545c1fa2fc3945997cb1073df97d63b19f575a",
+    "live-command.json": "67a81b5f5261f64193a2c1e6970f36f0263a6363d31552e7f4f50adbd47f8317",
+    "sanity/case-000/input.json": "19543fd2aa1cc5ce46d6cb0ca1686dc172f4cce99633fa42c5130be40daab8bd",
+    "sanity/case-000/output.json": "fbfe799ab906136692a1941298c9cea8b7698f909bf484224bbe89664796795f",
+    "sanity/case-001/input.json": "6e1a7abccca6aeddee0cff0c152d364158f996a74d13866033b0cd1d82fd4216",
+    "sanity/case-001/output.json": "385cb5cb72ef029fc1eff79e62ed7c5d021f279dcc35413a7bf827644e77e982",
+    "sanity/case-002/input.json": "ab3d242a67026d4dc13136d3fc0a36f37694ecccfd864b22836e961109b3b736",
+    "sanity/case-002/output.json": "a6e5cdca86a1a8e3a1322ca3f1ee6acbf02ea7b319525d619b9d38a360f28f8e",
+    "sanity/case-003/input.json": "4bd3de9e3a4f86e607db5b2186f9003093e45169965e04895cf5566c1fb8fac3",
+    "sanity/case-003/output.json": "dbe98166eda63abc14422f90476d161bd094c45cbf70275641579f20721ead4a",
+    "sanity/case-004/input.json": "384b8f23daf938df2d43c004d16bb4714c2cf91be60e9bf6b48501bc52bf9b82",
+    "sanity/case-004/output.json": "45a931220c6b7cf41c432b97742493cfb004d2329aeccf678c02f979fcddf889",
+    "sanity/case-005/input.json": "d6c42d3d03822e48487f7c3d718d830ea8d6adaf22c2e6e76e6d10d1bc658a16",
+    "sanity/case-005/output.json": "bae88c51a1c0b094ecb263288f2a88e97246e5b36019d9b0940de678d28cf7b5",
+    "sanity/cases.json": "8e2aadef60a0a7084e2a99464c01f930b3ee22fb3eae70359b57f640611c1162",
+    "sanity/policy.json": "6144617d6e9539363a7dabe9a75589a4000309ef47f433fe91718da5394792c0",
+    "sanity/report.json": "4e3c02bed36a9bd95df8bc751e781c3c78cc51ffd81151454fd1ff5f259db677"
+  },
+  "nativeVerificationScope": "Inspected persisted adapter verification, request and policy hashes, and consistent native decisions. The adapter temporary attestation and engine stdout are not retained in these artifacts; no engine or service was rerun."
+}

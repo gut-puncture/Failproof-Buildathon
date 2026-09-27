@@ -1,0 +1,16 @@
+Drafted one advisory concern: a faithful summary changing “possible” into “confirmed.” Constructed provenance is disclosed; the original pair remains exact.
+
+- [Diagnosis, provenance, and handoff](/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer/constructed-review/README.md)
+- [Policy](/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer/constructed-review/policy.json)
+- [Six labeled sanity cases](/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer/constructed-review/cases.json)
+- [Validation results](/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer/constructed-review/validation.json)
+
+Shared validation and fidelity checks passed. Live sanity remains pending; nothing was activated and no model was launched.
+
+Coordinator command, from this outside reviewer folder:
+
+```sh
+JEV_RUNTIME="$(python3 -c 'import json; print(json.load(open(".jev-review.json"))["runtime"])')"
+python3 "$JEV_RUNTIME/learn.py" sanity constructed-review/policy.json \
+  --cases constructed-review/cases.json --out constructed-review/sanity
+```

@@ -1,0 +1,11 @@
+{
+  "advisorySuitable": false,
+  "reason": "Draft only. The constructed pair illustrates a useful generic concern about unsupported increases in certainty in factual summaries, and the policy is suitable for sanity evaluation. Advisory suitability is not yet established because no live native Jev sanity results have been obtained or inspected. Activation is not authorized.",
+  "limitations": [
+    "The source run is a deliberately seeded, test-only constructed replay. The user discloses that an invocation-specific developer instruction caused the exact initial worker text. This is not evidence of a spontaneous worker failure, and instruction-hierarchy compliance is not being criticized.",
+    "The helper's exported kind of observed denotes capture of a saved pair; it does not establish natural provenance. Constructed provenance is recorded separately without changing either original message.",
+    "The runtime sees only the latest human message and completed worker response. It cannot see the invocation-specific instruction or determine whether a higher-priority instruction authorized an apparent discrepancy.",
+    "The worker model identity is absent from the selected saved artifacts. The configured Jev model is jev-1.13.0; it has not been invoked for this draft.",
+    "Structural validation and offline serialization do not establish classifier accuracy. Individual answers, combined advice, misses, false alarms, and native verification remain unevaluated."
+  ]
+}

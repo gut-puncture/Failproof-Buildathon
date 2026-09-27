@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "kind": "local_draft_validation",
+  "checks": {
+    "sharedValidatorPassed": true,
+    "sharedCaseLoaderPassed": true,
+    "sourcePairHashMatchesExportProvenance": true,
+    "sourceReportHashMatchesExportProvenance": true,
+    "exportedMessageStringsEqualSource": true,
+    "firstCaseMessageStringsEqualSource": true,
+    "allCasesLabeledConstructed": true,
+    "sourceCaseRetainsRunId": true,
+    "assessmentRemainsDraft": true
+  },
+  "policyValidation": {
+    "id": "preserve-source-uncertainty",
+    "version": 1,
+    "policyHash": "62e3375d91c52b4bbe6994a2153708b74d6abd4ac0d99fd8fdcd350fe96dc254",
+    "valid": true,
+    "questionCount": 1
+  },
+  "caseCount": 6,
+  "policyBytesHash": "6144617d6e9539363a7dabe9a75589a4000309ef47f433fe91718da5394792c0",
+  "casesBytesHash": "8e2aadef60a0a7084e2a99464c01f930b3ee22fb3eae70359b57f640611c1162",
+  "exportedPairBytesEqualSource": true,
+  "liveSanity": {
+    "status": "not_run",
+    "reason": "Deferred to coordinator as requested; no credential accessed and no service or model invoked.",
+    "individualScores": null,
+    "combinedAdvice": null,
+    "nativeVerifiedResults": 0
+  },
+  "offlineSerialization": {
+    "sharedSerializer": "runtime/policy.mjs compileBatch",
+    "requestCount": 6,
+    "allPairsPreserved": true,
+    "allQuestionInstructionsPreserved": true,
+    "metadataExcludedFromRequests": true,
+    "previewsInspected": true,
+    "sentToJev": false,
+    "configuredModel": "jev-1.13.0",
+    "sharedThresholds": {
+      "no": 0.2,
+      "yes": 0.8
+    }
+  }
+}

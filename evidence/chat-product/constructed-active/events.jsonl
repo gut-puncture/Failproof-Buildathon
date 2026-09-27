@@ -1,0 +1,5 @@
+{"type":"thread.started","thread_id":"01a0e3b9-1d4a-7073-a874-f36445707230"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"Orion has a confirmed battery fault. Lyra's inspection ruled out a battery fault."}}
+{"type":"item.completed","item":{"id":"item_1","type":"agent_message","text":"Orion may have a battery fault, and inspection is pending. Lyra’s inspection ruled out a battery fault."}}
+{"type":"turn.completed","usage":{"input_tokens":32020,"cached_input_tokens":15872,"cache_write_input_tokens":0,"output_tokens":123,"reasoning_output_tokens":70}}

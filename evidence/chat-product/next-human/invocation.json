@@ -1,0 +1,22 @@
+{
+  "kind": "constructed_test_request",
+  "purpose": "turn/session isolation and dynamic policy discovery",
+  "argv": [
+    "/Applications/ChatGPT.app/Contents/Resources/codex-cli/bin/codex",
+    "--no-daemon",
+    "exec",
+    "--json",
+    "-m",
+    "gpt-6-astra",
+    "-c",
+    "model_reasoning_effort=\"xhigh\"",
+    "-s",
+    "read-only",
+    "-o",
+    "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/next-human/final.txt",
+    "resume",
+    "01a0e3b9-1d4a-7073-a874-f36445707230",
+    "Reply with exactly this marker, including the quotation marks: \"NEXT_HUMAN_\ud83d\udfe2\". This is a formatting request. Do not use tools."
+  ],
+  "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project"
+}

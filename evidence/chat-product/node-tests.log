@@ -1,0 +1,24 @@
+✔ bare SDK allows, stale attestation, mismatched input/decision, wrong event and nonzero exits never verify (1.402042ms)
+✔ empty, invalid and missing pairs do not invoke even an unavailable engine (1.048958ms)
+✔ real installed engine attests quiet unchecked credential failure through native allow (186.540167ms)
+✔ real installed engine runs the maintained wrapper once, batches mocked Jev and attests native deny/allow (464.984334ms)
+✔ real installed SDK skipped/throw callbacks remain unverified despite allow-on-error (281.307792ms)
+✔ outer native process deadline kills a stalled child and remains unchecked (56.288375ms)
+✔ CLI uses exclusive output creation and validator emits metadata only (160.956166ms)
+✔ strict policy schema excludes executable/legacy fields and accepts any nonempty concern count within byte limit (2.131ms)
+✔ exact pair serialization preserves all text and excludes provenance and metadata from one indexed batch (2.401875ms)
+✔ empty, invalid, conflicting, or missing/oversized evidence performs no credential or network work (6.3085ms)
+✔ conflicting identities are isolated while an independent policy is evaluated (0.346042ms)
+✔ fixed thresholds gate applicability and evidence, then AND; every score validates before a shortcut (0.204375ms)
+✔ partial/malformed answers invalidate only affected policy even if another answer is a definite no (0.601583ms)
+✔ API/transport errors and malicious free text do not leak into saved result (0.464708ms)
+✔ credential, fetch and body parsing share a deadline; late completions cannot mutate or start fetch (82.327625ms)
+✔ timeouts cannot exceed the native callback budget; rejected credentials are quiet (0.519792ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1227.872458

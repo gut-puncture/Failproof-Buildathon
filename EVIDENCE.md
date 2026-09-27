@@ -1,43 +1,94 @@
-# Evidence and scope
+# Current chat-product verification
 
-All supplied semantic checks remain experimental. A finite test suite cannot prove that a rule is universally valid or that its evaluator always answers correctly. The activation criterion is zero misses, false positives, and unchecked results on every supplied labeled control, including expected applicability. Missing inputs and service failures are unchecked, never successful validation.
+Verified locally on 2026-09-27: project installation, exact message capture,
+outside policy authoring and activation, automatic discovery in a fresh chat,
+one advisory continuation, immediate continuation skip, and a new check on the
+next genuine human turn. **This verifies the mechanics, not a general improvement
+in agent quality.**
 
-## Recorded correction
+All new worker and reviewer chats used GPT-6-Astra with xhigh reasoning. The
+tested environment was macOS, Codex CLI `0.158.0-alpha.2.1`, Node `23.6.1`,
+`failproofai@1.0.8-beta.0`, and Jev `jev-1.13.0` at the configured production
+endpoint. [Session metadata](evidence/chat-product/session-provenance.json) and
+[source hashes and chronology](evidence/chat-product/chronology.json) identify
+the actual tested code and sessions. Desktop parity, Windows operation, other
+worker models, and other Codex versions were not demonstrated.
 
-[Ordered repair v1](evidence/ordered-live-repair-v1/report.json) records Jev violation 0.84 before and 0.09 after a Luna correction. Five supplemental falsy-error tests improved from 0/5 to 5/5. The original asynchronous task suite remained 5/9. The runner therefore reported `needs_review`, not a verified complete repair. This demonstrates improvement for one narrow failure and a limit of narrow semantic checks.
+## Natural trials: no supported failures
 
-## Check evaluations
+An installed worker project started with zero policies and no credential
+environment. It completed three ordinary human requests: a constrained adventure
+story, a summary of qualified project notes, and a JavaScript `mapDistinct`
+implementation. All three pairs were captured quietly with no native invocation.
 
-- [Ordered falsy-error initial controls](evidence/ordered-falsy-commit-error-used-as-state-v1/report.json): 4 controls, no misses, false positives, or unchecked results. The actual bad candidate scored 0.85 for violation.
-- [Additional falsy-error controls](evidence/ordered-falsy-heldout-v1/report.json): one correct unrelated-truthiness control was accepted at 0.04; two other controls received HTTP 503 and remained unchecked. The initial four successes do not satisfy the expanded gate.
-- [Ordered active-preparation check](evidence/ordered-active-preparations-counted-as-finished-v1/report.json): 2 of 4 controls unchecked, including the actual candidate at 0.49.
-- [Settings check](evidence/settings-live-v1/report.json): 5 of 6 controls unchecked, including a service error on the actual candidate.
-- [Batch-rename check](evidence/files-live-v1/report.json): missed the actual candidate at 0.19; 4 of 6 controls unchecked.
+A separate, unhinted reviewer in the installed outside folder exported and read
+the actual pairs. It found **no supported text-observable failure** and authored
+no policy. Its [reviews and limitations](evidence/chat-product/natural-review/README.md)
+remain intact. These three selected tasks do not establish a failure rate or
+general correctness; they also do not demonstrate learning from a natural Astra
+failure.
 
-Thresholds remain fixed at positive 0.8 and negative 0.2. Scores in between are unchecked. A score is not proof of overall program correctness. Replay reads saved evidence; it does not make a fresh judgment.
+## Constructed controls: real installed workflow
 
-## Search provenance
+To exercise the remaining path, a separate invocation deliberately seeded an
+initial summary that changes a possible fault into a confirmed fault. The full
+[construction and developer instruction](evidence/chat-product/constructed-seed/provenance.json)
+are retained. That instruction caused the text: this is a constructed discrepancy
+relative to the ordinary human-facing summary task, not a spontaneous error or a
+claim that the worker violated its complete instruction hierarchy.
 
-The examples are [settings](examples/settings/), [ordered import](examples/ordered-import/), and [batch rename](examples/batch-rename/). Each includes task, candidate, tests, and `provenance.json`. Supplemental tests were added after inspection and are not held-out measurements.
+A fresh outside reviewer selected that actual captured run and authored
+`preserve-source-uncertainty` v1. Six labeled constructed sanity cases went through
+the same native evaluator as the hook. The same reviewer then inspected the
+unedited live results and activated the unchanged policy through the helper.
+The [live assessment](evidence/chat-product/constructed-review/live-review.md)
+documents the individual scores and limits:
 
-Luna passed most tasks in the search. It was chosen as a smaller worker; no comparative benchmark establishes it as the worst worker or another model as universally stronger. Failures were observed across three task families: settings/values has five runs with mixed low and medium reasoning, ordered import failed in one of two medium runs, and batch rename has one run tested post hoc. These are observations, not population failure rates.
+- The seeded discrepancy elicited advice.
+- Faithful paraphrasing, different subjects, and a supplied confirmation elicited
+  no concern.
+- An explicitly authorized fictional change was inapplicable; missing source
+  text was insufficient evidence. Both stayed unchecked.
+- The missing-source concern probe scored **0.40**, contrary to its expected no
+  label. Its evidence score **0.07** prevented advice. The policy and cases were
+  not optimized or rerun to obtain preferred scores.
 
-The correction worker receives authored semantic feedback and original explicit test output, capped at 16,000 characters and labeled untrusted test evidence. It gets one attempt after a detected violation. Passing supplied tests establishes only the tested behavior; original inputs remain retained.
+The active policy was discovered without reinstall in a fresh chat. One verified
+native deny produced one advisory; the worker restated the seeded summary with
+uncertainty. The same turn recorded `stop_hook_active` and exited immediately.
+The saved pair and live request retain the initial response; the revised response
+was neither captured by the hook nor rechecked. A distinct next human request
+received a fresh, inapplicable check. Another fresh chat returned a clean summary
+and received no concern. See the [actual chat events](evidence/chat-product/constructed-active/events.jsonl),
+[hook records](evidence/chat-product/hook-records/), and
+[acceptance map](evidence/chat-product/ACCEPTANCE.md).
 
-## Reproducibility and integration
+Helper export `kind: observed` means that a pair was captured from a real session.
+It does **not** change the trial's constructed provenance. These test policies
+live only in evidence and the local test project; installation ships zero policies.
 
-The review skill passed `quick_validate.py` structural validation. The learner CLI was mock-tested for clean baseline handling, missing model access, output protection, credential stripping, and strict decision/applicability gating. Mock tests make no model or service calls and do not demonstrate reviewer accuracy.
+## Machinery and failures
 
-The native gate invokes the installed `failproofai` engine through its PreToolUse protocol in an isolated configuration. An engine denial, missing engine, or uncertain semantic result does not become a pass. This is distinct from the cloud event adapter: `failproof_native.py --upload REPORT.json` uploads selected saved verdict metadata, not a new evaluation or a policy deployment. Judge organization identity is in [failproof-org.json](failproof-org.json); upload success requires a saved receipt.
+All **31 Python tests and 16 Node/native tests passed**. They cover turn isolation,
+duplicate delivery, concurrent Stop claims, malformed input, immediate active
+exit, installer preservation, shared serialization, score gates, deadlines,
+activation, and native allow-on-error detection. The native engine is real in
+its integration tests; Jev answers are mocked there. Logs and the small follow-up
+installer-message check are in [chat-product](evidence/chat-product/).
 
-Only explicitly requested project hook installation changes project configuration. This package does not install global hooks or change global Codex settings by itself. Consult the hook installation output for its exact files and scope.
+[Request inspection](evidence/chat-product/request-boundary-check.json) verifies
+exact two-string state in all six sanity requests and rich-text preservation in
+the production serializer. The installed chronology independently verifies each
+live request against its captured pair. No credentials or auth headers are saved.
+Question genericness was reviewed separately; JSON validation cannot prove it.
 
-## Final native repair
+Three earlier manual native diagnostics on a different constructed policy are
+also retained: a transport failure, a six-second timeout, and a successful
+advisory. The failures stayed unchecked. These were manual diagnostic attempts,
+not automatic runtime retries, and are not classification successes. Saved native
+evaluation counts are backed by code and sentinel tests; service-side traffic
+was not independently metered.
 
-`evidence/ordered-native-repair-v3/report.json` records real Jev detection (.85) and native Failproof denial. A single fresh Luna correction then passed 9 original and 5 supplemental tests (14/14 versus 5/14 before). Its initial final-policy recheck was unchecked; a separate final recheck is retained if completed. The correction received the original failing test output as well as Sol-authored Jev feedback, so this does not isolate the causal contribution of each.
-
-The unchanged falsy-error check passed all three additional constructed controls on retry (`ordered-falsy-heldout-retry/report.json`), after two service failures on the first attempt. Together with the initial four controls this is seven small checks, not a broad benchmark.
-
-Final recheck completed: `evidence/ordered-native-final-recheck.json` records Jev violation score 0.08 and native policy **allow** for the unchanged repaired candidate. Native deny-to-allow plus 5/14-to-14/14 tests is verified across the retained original run and final recheck. This is one bounded example; the native allow adapter was corrected between those calls. Both original and final records were uploaded to Failproof Cloud; adjacent receipts show 4 accepted and zero skipped events per upload.
-
-Final verification: 14 Python tests, 9 Node runtime tests, skill format validation, and offline demo replay pass. Hook input/output and installer tests pass; an interactive Codex hook continuation was not run before submission.
+Earlier task/code-file prototype results, original Sol/Luna identities, and
+superseded activation/recheck rules remain in
+[HISTORICAL_EVIDENCE.md](HISTORICAL_EVIDENCE.md). They do not prove this product.

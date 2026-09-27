@@ -1,0 +1,188 @@
+{
+  "verifiedAt": "2026-09-27",
+  "baseCommit": "d2dfdf13a0a84fbed90c328e5ea0c04d388d2e58",
+  "runtimeFileSHA256": {
+    "install_hook.py": "5fcc5869eabfdf776dbb7816b87663d1b65bdd3a7561f3924651a1a85937080b",
+    "hooks/stop.py": "dacdf9ba567a6e24ec71ee8568138ea7c3322a1d9c6ec07c477fdcdebd4b2635",
+    "learn.py": "0de5b0b4ef09bf41e8065bcc943e143993f0f21b66a115a75080e58fe0ef673c",
+    "runtime/policy.mjs": "08cbedc8fe5084e3c9a8cd404dd8ed9440eff30b537af6dc59b1100bd215be15",
+    "runtime/guard.mjs": "c3ce5daa4abbcda371abe7bb9fa2365f67b664100b50e5f3e7b62bab0b3d848c",
+    "native/gate.mjs": "a1c71a9eebb671fdadbef9cdc1be0291cba2e4af1c294c898c348688ace0ceb8",
+    ".failproofai/policies/reusable-check.policies.mjs": "2f702b07223256cf58bce225d950738112370abcfe50d96f2276f42ab9c4e109",
+    "skills/failure-to-check/SKILL.md": "6cf2640e10ab0666994dc237b11d3ac8eb28236b7de272f616ed5222b04ab757",
+    "skills/failure-to-check/references/policy-contract.md": "443d76124916220c8c117ea69a8a3feda260eacd75881ec5d72956a0e118063d",
+    "test_hooks.py": "0514e4220c3235372964edb0e3520e3cc2033046ba2cebb04a5ead2a074424de",
+    "test_learn.py": "c34f421f0f77e37235068c9aa0edf6aa7574c09be921dee14146736629bb5b32",
+    "runtime/guard.test.mjs": "975d5d42c61ed0f4b6678fc4e7adb88337d280d749afa79d7004913922c7b1af",
+    "native/gate.test.mjs": "b116b96b101a475a6fd6202d3a0575d67bd71f8029eb49f0a584c8bd114c76b0",
+    "package.json": "c9bfe17dbaa1c43efe652d7636a8057954e90b572d2abc8d3216ac9065de622a",
+    "package-lock.json": "30a40808e41cdc9a36f786197c7bf282230d35b906e845e24c2d2088134898f3"
+  },
+  "sessions": {
+    "natural_worker": "01a0e3a6-fe87-7193-8da7-e2e97f5dbe15",
+    "natural_reviewer": "01a0e3ad-9272-7031-adf9-d086adaf8201",
+    "constructed_seed": "01a0e3b1-63b7-7000-9180-93e439433ade",
+    "constructed_active": "01a0e3b9-1d4a-7073-a874-f36445707230",
+    "constructed_reviewer": "01a0e3b2-553b-7731-ad1f-0177a325511a",
+    "fresh_chat": "01a0e3ba-3a87-78b3-917c-426b8fc59992"
+  },
+  "installedConfigPreserved": true,
+  "hookDefinitionsPreservedAcrossReinstall": true,
+  "currentInstalledSkillMatchesSource": true,
+  "activeAdvisoryRunId": "1472c70b7337fe9c38678b69954b3fcc6768db0f91eb15a1603622b8bd08a2fa",
+  "records": [
+    {
+      "runId": "f50ed35dbaf85560a0ede14b916002dc57af69db4a989675fb82b8d1eab336a2",
+      "session_id": "01a0e3a6-fe87-7193-8da7-e2e97f5dbe15",
+      "turn_id": "01a0e3a7-ea99-72a2-84f3-13bff3d1e49b",
+      "completedAt": "2026-09-27T16:17:26.186544+00:00",
+      "decision": "unchecked",
+      "reason": "empty_policies",
+      "pairSHA256": "e4ccd5d73e0a947d68aa44821ab879be2ee2dce017f1bbd7506c75010fe0b2d7",
+      "reportSHA256": "09b269d08ae2cb644309430a5e01635281392ff2bdc8c587c1e9acba6629074b",
+      "trialKind": "natural_unhinted",
+      "recordedNativeEvaluations": 0,
+      "continuationSkipped": false
+    },
+    {
+      "runId": "a50d648b4c2f472ad92cabb8509070e1a4ad6ede3a03f41aeddd88238b58e6ee",
+      "session_id": "01a0e3a6-fe87-7193-8da7-e2e97f5dbe15",
+      "turn_id": "01a0e3a8-9972-72b1-b2dd-4756cfd4dddf",
+      "completedAt": "2026-09-27T16:18:06.202301+00:00",
+      "decision": "unchecked",
+      "reason": "empty_policies",
+      "pairSHA256": "d80a7c72da957bf4e53bd8c1918e3af9dd21b8292dce9cacaf0a4800566dc424",
+      "reportSHA256": "0c39600e1a481ee0261c967d683c35b862255a372fd645d559af48776ade6897",
+      "trialKind": "natural_unhinted",
+      "recordedNativeEvaluations": 0,
+      "continuationSkipped": false
+    },
+    {
+      "runId": "445f80c3a731da35c3cad4d3eee7ad634e1989e688c2580b400bf881c61fd90b",
+      "session_id": "01a0e3a6-fe87-7193-8da7-e2e97f5dbe15",
+      "turn_id": "01a0e3aa-86d2-7063-8720-a77d6da8071a",
+      "completedAt": "2026-09-27T16:20:25.657272+00:00",
+      "decision": "unchecked",
+      "reason": "empty_policies",
+      "pairSHA256": "d4bcf4db2c287ff203f1d0e7c3de6644cc37ceb28dd3d9106a7b4b79e13f5234",
+      "reportSHA256": "b93838710b26d8540db1aa735af65a3dace45aa75d2ae9b5ecd98474287bdd5b",
+      "trialKind": "natural_unhinted",
+      "recordedNativeEvaluations": 0,
+      "continuationSkipped": false
+    },
+    {
+      "runId": "93cded109e55d70f7c501d5d14ee0de2b85a50a740c9704e32110bf6fcc941cf",
+      "session_id": "01a0e3b1-63b7-7000-9180-93e439433ade",
+      "turn_id": "01a0e3b1-6438-7ac0-9f52-bc2a6fb72b67",
+      "completedAt": "2026-09-27T16:27:37.274136+00:00",
+      "decision": "unchecked",
+      "reason": "empty_policies",
+      "pairSHA256": "1e7277688c74d87211be227ac736938226463a94b8afa3837da7396cd4060237",
+      "reportSHA256": "1a1f93ecd848ecb22226f60e1e95607aee5bc8a158065c049dc9aa1e28c7aa77",
+      "trialKind": "constructed_mechanics",
+      "recordedNativeEvaluations": 0,
+      "continuationSkipped": false
+    },
+    {
+      "runId": "1472c70b7337fe9c38678b69954b3fcc6768db0f91eb15a1603622b8bd08a2fa",
+      "session_id": "01a0e3b9-1d4a-7073-a874-f36445707230",
+      "turn_id": "01a0e3b9-1df0-73e3-81f6-a31aeab4cd32",
+      "completedAt": "2026-09-27T16:36:03.463957+00:00",
+      "decision": "advisory",
+      "reason": null,
+      "pairSHA256": "1e7277688c74d87211be227ac736938226463a94b8afa3837da7396cd4060237",
+      "reportSHA256": "49ed343079d672d9f5f571170b9b43d677e892b06f946871fc7629b9863a2fa3",
+      "trialKind": "constructed_mechanics",
+      "recordedNativeEvaluations": 1,
+      "continuationSkipped": true,
+      "nativeDecision": "deny",
+      "results": [
+        {
+          "policyIndex": 0,
+          "id": "preserve-source-uncertainty",
+          "version": 1,
+          "policyHash": "62e3375d91c52b4bbe6994a2153708b74d6abd4ac0d99fd8fdcd350fe96dc254",
+          "decision": "advisory",
+          "reason": "conjunction_positive",
+          "scores": {
+            "applicability": 0.98,
+            "evidenceSufficiency": 0.97,
+            "questions": [
+              0.98
+            ]
+          }
+        }
+      ],
+      "requestSHA256": "25327244f0006b271e71300c553aa23139364e4d4a6dbb0d3ae81f25504cec97",
+      "exactPairInLiveRequest": true
+    },
+    {
+      "runId": "10cdaeedc6bf93214adc526a675a592715d57263496fde9122644b01c6351627",
+      "session_id": "01a0e3b9-1d4a-7073-a874-f36445707230",
+      "turn_id": "01a0e3b9-cb1d-7553-bb1d-5e322dd31ae9",
+      "completedAt": "2026-09-27T16:36:46.712782+00:00",
+      "decision": "unchecked",
+      "reason": null,
+      "pairSHA256": "b0ea46a93f8cd35be8cffedabb265e6d6befa38482b63034df5b7548c41b4789",
+      "reportSHA256": "256860f76f914cf6b8364506b214e171a0c6922bd3facd5cb8f6f0296a7e4128",
+      "trialKind": "constructed_mechanics",
+      "recordedNativeEvaluations": 1,
+      "continuationSkipped": false,
+      "nativeDecision": "allow",
+      "results": [
+        {
+          "policyIndex": 0,
+          "id": "preserve-source-uncertainty",
+          "version": 1,
+          "policyHash": "62e3375d91c52b4bbe6994a2153708b74d6abd4ac0d99fd8fdcd350fe96dc254",
+          "decision": "unchecked",
+          "reason": "inapplicable",
+          "scores": {
+            "applicability": 0.05,
+            "evidenceSufficiency": 0.09,
+            "questions": [
+              0.03
+            ]
+          }
+        }
+      ],
+      "requestSHA256": "808aabc1fe6308f938e1a32879b2f0d445860c8efe49bbd3fcbfe99fafe30442",
+      "exactPairInLiveRequest": true
+    },
+    {
+      "runId": "47e336f18867e82eea0eda018a8f0c2f7dbe70784496cff10a784685137f5b33",
+      "session_id": "01a0e3ba-3a87-78b3-917c-426b8fc59992",
+      "turn_id": "01a0e3ba-3af8-7273-8a9d-d1e3bfb7704c",
+      "completedAt": "2026-09-27T16:37:16.379571+00:00",
+      "decision": "quiet",
+      "reason": null,
+      "pairSHA256": "cc34f1058dda8f05ad9fec4865636c7502705f3f23ef9e1e4712199f4337baff",
+      "reportSHA256": "32c3cf919552ebda4c2608933470fdb3f6c4356128bab829f2efd06feb84cab3",
+      "trialKind": "constructed_mechanics",
+      "recordedNativeEvaluations": 1,
+      "continuationSkipped": false,
+      "nativeDecision": "allow",
+      "results": [
+        {
+          "policyIndex": 0,
+          "id": "preserve-source-uncertainty",
+          "version": 1,
+          "policyHash": "62e3375d91c52b4bbe6994a2153708b74d6abd4ac0d99fd8fdcd350fe96dc254",
+          "decision": "no_concern_detected",
+          "reason": "conjunction_negative",
+          "scores": {
+            "applicability": 0.99,
+            "evidenceSufficiency": 0.97,
+            "questions": [
+              0.04
+            ]
+          }
+        }
+      ],
+      "requestSHA256": "2421787981faa5e001046e00a78fdc949d66fa7a702b5a163860f10bd73a92eb",
+      "exactPairInLiveRequest": true
+    }
+  ],
+  "callCountScope": "Counts are saved native evaluations plus inspected single-fetch/active-exit code and sentinel tests; service-side traffic was not independently metered.",
+  "constructionDisclosure": "Natural trials found no supported error. Every later mechanics trial is explicitly constructed; the seeded initial response follows a disclosed invocation-specific developer instruction. No spontaneous error or general improvement is claimed."
+}

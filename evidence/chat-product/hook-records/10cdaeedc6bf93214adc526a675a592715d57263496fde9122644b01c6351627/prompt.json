@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "session_id": "01a0e3b9-1d4a-7073-a874-f36445707230",
+  "turn_id": "01a0e3b9-cb1d-7553-bb1d-5e322dd31ae9",
+  "capturedAt": "2026-09-27T16:36:43.758102+00:00",
+  "human_message": "Reply with exactly this marker, including the quotation marks: \"NEXT_HUMAN_🟢\". This is a formatting request. Do not use tools."
+}

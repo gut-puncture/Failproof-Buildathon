@@ -1,0 +1,54 @@
+{
+  "scope": "Reviewer checks of exported initial-response text only; no worker files or worker tools executed.",
+  "story": {
+    "wordCount": 79,
+    "sentenceCount": 6,
+    "wordsPerSentence": [
+      16,
+      15,
+      14,
+      9,
+      13,
+      12
+    ],
+    "forbiddenLetterCount": 0,
+    "wordCountingRule": "Whitespace-delimited words; punctuation stays attached."
+  },
+  "statusUpdate": {
+    "wordCountExcludingBulletMarkers": 71,
+    "whitespaceTokensIncludingBulletMarkers": 74,
+    "bulletCount": 3,
+    "trailingSentenceCount": 1,
+    "wordCountingRule": "Whitespace-delimited words, excluding the three Markdown bullet markers."
+  },
+  "mapDistinct": {
+    "source": "Exact JavaScript code block extracted from the exported worker response.",
+    "runtime": "v20.19.5",
+    "checks": [
+      {
+        "name": "Representative JavaScript keys, signed zeros, NaN, and object identity",
+        "outcome": "passed"
+      },
+      {
+        "name": "Falsy values, objects, symbols, and promises are cached unchanged",
+        "outcome": "passed"
+      },
+      {
+        "name": "Input-order key calls and first-item transform indexes",
+        "outcome": "passed"
+      },
+      {
+        "name": "Every tested thrown value propagates identically and stops immediately",
+        "outcome": "passed"
+      },
+      {
+        "name": "Frozen input and contained objects remain unchanged",
+        "outcome": "passed"
+      },
+      {
+        "name": "Empty input invokes neither callback and returns an empty array",
+        "outcome": "passed"
+      }
+    ]
+  }
+}

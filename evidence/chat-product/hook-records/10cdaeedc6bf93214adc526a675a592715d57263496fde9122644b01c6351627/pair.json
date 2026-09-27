@@ -1,0 +1,4 @@
+{
+  "human_message": "Reply with exactly this marker, including the quotation marks: \"NEXT_HUMAN_🟢\". This is a formatting request. Do not use tools.",
+  "worker_response": "\"NEXT_HUMAN_🟢\""
+}

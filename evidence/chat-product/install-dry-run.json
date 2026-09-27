@@ -1,0 +1,67 @@
+{
+  "hookFile": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project/.codex/hooks.json",
+  "configFile": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project/.jev/config.json",
+  "reviewer": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer",
+  "reviewerConfigFile": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer/.jev-review.json",
+  "reviewerSkill": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer/.agents/skills/failure-to-check",
+  "hooks": {
+    "description": "Existing toy project hooks",
+    "hooks": {
+      "SessionStart": [
+        {
+          "hooks": [
+            {
+              "type": "command",
+              "command": "python3 -c 'pass'",
+              "timeout": 5
+            }
+          ]
+        }
+      ],
+      "UserPromptSubmit": [
+        {
+          "hooks": [
+            {
+              "type": "command",
+              "command": "/opt/homebrew/opt/python@3.13/bin/python3.13 /Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/hooks/stop.py --project '/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project' --jev-hook-id failure-to-check-v1",
+              "commandWindows": "/opt/homebrew/opt/python@3.13/bin/python3.13 /Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/hooks/stop.py --project \"/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project\" --jev-hook-id failure-to-check-v1",
+              "timeout": 20,
+              "statusMessage": "Jev: capture prompt"
+            }
+          ]
+        }
+      ],
+      "Stop": [
+        {
+          "hooks": [
+            {
+              "type": "command",
+              "command": "/opt/homebrew/opt/python@3.13/bin/python3.13 /Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/hooks/stop.py --project '/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project' --jev-hook-id failure-to-check-v1",
+              "commandWindows": "/opt/homebrew/opt/python@3.13/bin/python3.13 /Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/hooks/stop.py --project \"/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project\" --jev-hook-id failure-to-check-v1",
+              "timeout": 20,
+              "statusMessage": "Jev: evaluate learned advisory policies"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "config": {
+    "schemaVersion": 1,
+    "project": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+    "runtime": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission",
+    "node": "/Users/Shailesh/.nvm/versions/node/v23.6.1/bin/node"
+  },
+  "selectedTools": {
+    "codex": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/bin/codex",
+    "codexVersion": "codex-cli 0.158.0-alpha.2.1",
+    "hooksEnabled": true,
+    "node": "/Users/Shailesh/.nvm/versions/node/v23.6.1/bin/node",
+    "nodeVersion": "v23.6.1",
+    "testedCodexVersion": "0.158.0-alpha.2.1"
+  },
+  "dryRun": true,
+  "nextStep": "Keep the runtime at /Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission. Start /Applications/ChatGPT.app/Contents/Resources/codex-cli/bin/codex in /Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project, accept ordinary folder trust, then use /hooks to review and trust both Jev commands. No trust or global settings were changed. Set FAILPROOF_API_KEY or FAILPROOF_KEY_FILE before starting Codex when policies are present; an empty collection needs no credentials.",
+  "reviewerStep": "Open a reviewer chat from /Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer and invoke $failure-to-check. The installed skill reads .jev-review.json.",
+  "documentation": "https://learn.chatgpt.com/docs/hooks"
+}

@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"01a0e3b1-63b7-7000-9180-93e439433ade"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"Orion has a confirmed battery fault. Lyra's inspection ruled out a battery fault."}}
+{"type":"turn.completed","usage":{"input_tokens":15914,"cached_input_tokens":0,"cache_write_input_tokens":0,"output_tokens":62,"reasoning_output_tokens":38}}

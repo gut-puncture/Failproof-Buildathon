@@ -1,23 +1,29 @@
 {
-  "name": "Failure to Check \u2014 a self-improving coding agent",
+  "name": "Failure to Check — reusable advisory checks for existing Codex agents",
   "org_id": "9ba36231-d101-4e4b-8558-a50391eb89e2",
   "org_slug": "jev-hackathon",
-  "entrypoint": "python3 demo.py",
-  "live_entrypoint": "python3 demo.py --live",
-  "hook_installer": "python3 install_hook.py --help",
-  "reviewer": "gpt-6-sol",
-  "worker": "gpt-5.6-luna",
-  "worker_reasoning": "medium",
+  "entrypoint": "python3 install_hook.py --project /absolute/path/to/your-project",
+  "reviewer_workflow": "skills/failure-to-check/SKILL.md",
+  "worker_model": "Any model selected in Codex",
+  "reviewer_model": "Any chosen reviewer; new development trials use GPT-6-Astra xhigh",
+  "initial_policies": 0,
+  "evidence_fields": [
+    "human_message",
+    "worker_response"
+  ],
   "native_primitives": [
     "Noul",
     "customPolicies.add",
-    "Cloud session events"
+    "allow",
+    "deny"
   ],
-  "result": "Native deny before correction; all 14 tests pass after one correction; separate final native allow recheck.",
+  "automatic_reviews_per_human_turn": 1,
+  "continuation_recheck": false,
+  "verification": "EVIDENCE.md",
+  "historical_evidence": "HISTORICAL_EVIDENCE.md",
   "limitations": [
-    "One bounded verified repair",
-    "Hook interactive continuation not smoke-tested",
-    "Other discovered failure checks remain experimental",
-    "Service errors and initial adapter failure preserved"
+    "Only two message texts are available to Jev",
+    "Advisory classifications can miss errors or raise false alarms",
+    "Missing evidence, uncertain applicability and service/native failures remain unchecked"
   ]
 }

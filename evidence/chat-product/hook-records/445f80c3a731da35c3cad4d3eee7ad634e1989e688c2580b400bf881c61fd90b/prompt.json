@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "session_id": "01a0e3a6-fe87-7193-8da7-e2e97f5dbe15",
+  "turn_id": "01a0e3aa-86d2-7063-8720-a77d6da8071a",
+  "capturedAt": "2026-09-27T16:19:59.124584+00:00",
+  "human_message": "Write a self-contained JavaScript function mapDistinct(items, keyOf, transform) and explain its behavior briefly. Do not use tools or write files; include the complete implementation in your response. For each distinct key, call transform exactly once. keyOf may return any JavaScript value, and key equality must use Object.is (so NaN keys match, but +0 and -0 differ; objects match only by identity). Calls to keyOf occur in input order. Invoke transform with the first item and its index for that key. transform may return any value, including undefined, null, false, a promise, or an object, or throw any value. Return an array of the transform results in the original item order, preserving result identity for repeated keys. If keyOf or transform throws, stop immediately and rethrow that identical value. The implementation must not mutate items or the objects it contains."
+}

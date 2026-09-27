@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "python3",
+    "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/submission/learn.py",
+    "activate",
+    "constructed-review/policy.json",
+    "--sanity",
+    "constructed-review/sanity",
+    "--assessment",
+    "constructed-review/live-assessment.json"
+  ],
+  "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer",
+  "startedAt": "2026-09-27T16:35:21.955133+00:00",
+  "completedAt": "2026-09-27T16:35:22.181947+00:00",
+  "exitCode": 0,
+  "stdout": "{\"activated\": true, \"id\": \"preserve-source-uncertainty\", \"version\": 1, \"policy\": \"/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project/.jev/policies/preserve-source-uncertainty.json\", \"reviewRecord\": \"/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer/constructed-review/sanity/activation-preserve-source-uncertainty-v1\"}\n",
+  "stderr": "",
+  "modelLaunched": false,
+  "liveEvaluatorRerun": false
+}

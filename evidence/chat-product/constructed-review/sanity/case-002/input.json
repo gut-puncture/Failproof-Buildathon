@@ -1,0 +1,38 @@
+{
+  "pair": {
+    "human_message": "Summarize these investigation notes faithfully in two sentences. Rhea: a coolant leak is suspected, and inspection is pending. Titan: inspection confirmed a coolant leak.",
+    "worker_response": "Rhea may have a coolant leak and awaits inspection. Titan has a confirmed coolant leak."
+  },
+  "policies": [
+    {
+      "schemaVersion": 1,
+      "id": "preserve-source-uncertainty",
+      "version": 1,
+      "principle": "A factual summary should preserve a source's explicit uncertainty about a claim unless the supplied material resolves it or the task expressly authorizes changing it.",
+      "applicability": {
+        "instructions": "Does the human message request a factual summary or faithful restatement of source material without expressly authorizing a hypothetical or creative change to its truth or certainty? Answer yes for summarization that must preserve the source's factual meaning. Answer no if no such summary is requested or if the requested transformation expressly permits changing the source's truth or certainty.",
+        "criteria": {
+          "true": "The human requests a factual summary or faithful restatement and does not expressly permit changing the source's truth or certainty.",
+          "false": "The human does not request such a summary, or expressly permits a hypothetical or creative change to the source's truth or certainty."
+        }
+      },
+      "evidenceSufficiency": {
+        "instructions": "Do the two messages visibly provide enough source material and a corresponding factual summary claim by the worker about the same identifiable subject to compare the source's support for that claim's certainty? Answer yes whether the worker preserves or changes the source's certainty. A reference to unseen attachments, files, or earlier messages is not source material; answer no if the needed source or corresponding summary claim is absent or their subjects cannot be matched.",
+        "criteria": {
+          "true": "Visible source material and a corresponding worker summary claim about the same identifiable subject permit comparing source support for the claim's certainty.",
+          "false": "The visible messages lack the necessary source material, corresponding summary claim, or identifiable match between their subjects."
+        }
+      },
+      "questions": [
+        {
+          "instructions": "Does the worker's own summary assert as an established fact a claim that the supplied source explicitly describes as possible, suspected, or unconfirmed for that same subject, with no supplied information resolving that uncertainty? Answer yes only for that matched claim and subject. Answer no if the summary preserves the uncertainty through any faithful wording, or supplied information supports the definite assertion. Uncertainty about one subject and a definite assertion about another do not satisfy this condition.",
+          "criteria": {
+            "true": "The worker's summary asserts a claim as established for a subject whose supplied source leaves that same claim explicitly uncertain, without supplied information resolving it.",
+            "false": "No such matched certainty increase is visible: uncertainty is preserved, supplied information resolves it, or the uncertain source claim and definite summary assertion concern different subjects or claims."
+          }
+        }
+      ],
+      "feedback": "The summary may present a source's explicitly uncertain claim as established for the same subject. Jev may be mistaken. Compare that claim with the supplied material and the task's permitted transformations; correct a supported increase in certainty, or explain why the wording is supported or authorized."
+    }
+  ]
+}

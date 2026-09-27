@@ -1,0 +1,13 @@
+{
+  "session_id": "01a0e3a6-fe87-7193-8da7-e2e97f5dbe15",
+  "turn_id": "01a0e3a7-ea99-72a2-84f3-13bff3d1e49b",
+  "capturedAt": "2026-09-27T16:17:08.975408+00:00",
+  "completedAt": "2026-09-27T16:17:26.186544+00:00",
+  "evidenceScope": "initial_response_before_advice",
+  "schemaVersion": 1,
+  "kind": "observed",
+  "runId": "f50ed35dbaf85560a0ede14b916002dc57af69db4a989675fb82b8d1eab336a2",
+  "project": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+  "sourcePairHash": "e4ccd5d73e0a947d68aa44821ab879be2ee2dce017f1bbd7506c75010fe0b2d7",
+  "sourceReportHash": "09b269d08ae2cb644309430a5e01635281392ff2bdc8c587c1e9acba6629074b"
+}

@@ -1,87 +1,150 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {evaluate,decide,summarize} from './guard.mjs';
-const q={type:'noul',instructions:'A narrow semantic question.',criteria:{true:'Present',false:'Absent'}};
-const check={id:'test',version:1,requiredInputs:['task','implementation'],questions:{applicability:q,violation:q,single:q}};
-const state={task:'Preserve independent identities.',implementation:'function demo() {}'};
-const opts={credentialProvider:async()=>'mock-only-not-a-real-key'};
-const response=answers=>({ok:true,status:200,json:async()=>({answers})});
-test('paired batches independent questions in one request; single switches without changing package',async()=>{
-  let calls=0;
-  const fetchImpl=async(_,options)=>{
-    calls++; const request=JSON.parse(options.body);
-    if (request.questions.single) {assert.deepEqual(Object.keys(request.questions),['single']);return response({single:{noul:0.1}});}
-    assert.deepEqual(Object.keys(request.questions),['applicability','violation']);
-    return response({applicability:{noul:0.9},violation:{noul:0.95,reason:'Observed mismatch'}});
-  };
-  const paired=await evaluate(check,state,{...opts,fetchImpl});
-  assert.equal(paired.decision,'violation_detected');assert.equal(calls,1);
-  assert.equal(paired.reasons.violation,'Observed mismatch');assert.ok(paired.requestHash);
-  const single=await evaluate(check,state,{...opts,fetchImpl,mode:'single'});
-  assert.equal(single.decision,'no_violation_detected');assert.equal(calls,2);
+import {evaluate, decide, ENDPOINT} from './guard.mjs';
+import {validatePolicy, validatePair, compileBatch, hashJSON, MAX_PAIR_BYTES, MAX_POLICY_BYTES} from './policy.mjs';
+
+const question = {instructions:'Does the response remove an explicit uncertainty from the supplied source?',
+  criteria:{true:'The same source uncertainty is stated as settled.',false:'The uncertainty is retained or resolved explicitly by the source.'}};
+const policy = {schemaVersion:1, id:'preserve-uncertainty', version:1, principle:'Preserve explicit source uncertainty.',
+  applicability:question, evidenceSufficiency:question, questions:[question,question],
+  feedback:'If the response overstates a supplied source, preserve that uncertainty or explain why it is resolved.'};
+const pair = {human_message:'  Summarize this:\nThe launch may move. 🟢\n',worker_response:'The launch will move.\n '};
+const response = answers => ({ok:true,status:200,json:async () => ({answers})});
+const opts = {credentialProvider:async () => 'test-placeholder'};
+const answersFor = (request, value=0.9) => Object.fromEntries(Object.keys(request.questions).map(key => [key,{type:'noul',noul:value}]));
+const noAccess = {credentialProvider:() => assert.fail('credentials must not be accessed'),fetchImpl:() => assert.fail('network must not be accessed')};
+
+test('strict policy schema excludes executable/legacy fields and accepts any nonempty concern count within byte limit', () => {
+  assert.equal(validatePolicy(policy).valid,true);
+  assert.equal(validatePolicy({...policy,questions:Array(7).fill(question)}).questionCount,7);
+  const invalid = [null,[],{}, {...policy,schemaVersion:2},{...policy,id:'UpperCase'}, {...policy,version:1.2},
+    {...policy,version:0},{...policy,feedback:' '},{...policy,extra:true},{...policy,questions:[]},
+    {...policy,applicability:{...question,type:'noul'}},{...policy,questions:[{...question,criteria:{...question.criteria,maybe:'?'}}]},
+    {...policy,questions:[{instructions:'x',criteria:{true:'yes',false:''}}]}];
+  for (const item of invalid) assert.equal(validatePolicy(item).valid,false);
+  assert.equal(validatePolicy({...policy,feedback:'x'.repeat(MAX_POLICY_BYTES)}).reason,'policy_too_large');
+  assert.equal(validatePolicy(policy).policyHash,hashJSON(policy));
 });
-test('applicability gates independently; ambiguous or invalid scores remain unchecked',()=>{
-  assert.equal(decide({applicability:0.1,violation:0.99}).decision,'not_applicable');
-  assert.equal(decide({applicability:0.5,violation:0.99}).decision,'unchecked');
-  assert.equal(decide({applicability:0.9,violation:0.5}).decision,'unchecked');
-  assert.equal(decide({applicability:0.9,violation:0.2}).decision,'no_violation_detected');
-  assert.equal(decide({applicability:0.1,violation:NaN}).decision,'not_applicable');
-  assert.equal(decide({applicability:0.9,violation:NaN}).decision,'unchecked');
+
+test('exact pair serialization preserves all text and excludes provenance and metadata from one indexed batch', async () => {
+  let count=0;
+  const policies=[null,policy,{...policy,id:'other-principle',version:3}];
+  const result=await evaluate(policies,pair,{...opts,fetchImpl:async (url,options) => {
+    count++;
+    assert.equal(url,ENDPOINT); assert.equal(options.redirect,'error');
+    const request=JSON.parse(options.body);
+    assert.deepEqual(Object.keys(request),['model','state','questions']);
+    assert.deepEqual(request.state,pair);
+    assert.deepEqual(Object.keys(request.questions),['p1_applicability','p1_evidence_sufficiency','p1_q0','p1_q1',
+      'p2_applicability','p2_evidence_sufficiency','p2_q0','p2_q1']);
+    assert.equal(options.body.includes(policy.id),false); assert.equal(options.body.includes(policy.feedback),false);
+    return response(answersFor(request));
+  }});
+  assert.equal(count,1); assert.equal(result.decision,'advisory');
+  assert.equal(result.results[0].decision,'unchecked');
+  assert.deepEqual(result.suggestions.map(item=>item.policyIndex),[1,2]);
+  assert.deepEqual(result.request.state,pair); assert.equal(result.requestHash,hashJSON(result.request));
+  assert.equal(JSON.stringify(result).includes('test-placeholder'),false);
 });
-test('negative applicability discards missing violation and package thresholds apply unless overridden',async()=>{
-  const negative=await evaluate(check,state,{...opts,fetchImpl:async()=>response({applicability:{noul:0.1}})});
-  assert.equal(negative.decision,'not_applicable');
-  const configured={...check,thresholds:{positive:0.9,negative:0.1}};
-  const fetchImpl=async()=>response({applicability:{noul:0.85},violation:{noul:0.95}});
-  assert.equal((await evaluate(configured,state,{...opts,fetchImpl})).decision,'unchecked');
-  assert.equal((await evaluate(configured,state,{...opts,fetchImpl,positive:0.8})).decision,'violation_detected');
+
+test('empty, invalid, conflicting, or missing/oversized evidence performs no credential or network work', async () => {
+  assert.equal((await evaluate([],pair,noAccess)).decision,'quiet');
+  assert.equal((await evaluate([null],pair,noAccess)).results[0].decision,'unchecked');
+  assert.equal((await evaluate([policy,{...policy,version:2}],pair,noAccess)).results[0].reason,'conflicting_policy_identity');
+  for (const input of [null,{...pair,notes:'extra'}, {...pair,worker_response:' '},{human_message:'x'}]) {
+    assert.equal(validatePair(input).valid,false);
+    assert.equal((await evaluate([policy],input,noAccess)).reason,'invalid_pair');
+  }
+  assert.equal((await evaluate([policy],{...pair,human_message:'x'.repeat(MAX_PAIR_BYTES)},noAccess)).reason,'pair_too_large');
+  const large={...policy,questions:[{...question,instructions:'x'.repeat(50000)}]};
+  const collection=Array.from({length:11},(_,index)=>({...large,id:`policy-${index}`}));
+  assert.equal((await evaluate(collection,pair,noAccess)).reason,'request_too_large');
 });
-test('missing context and undeclared observations perform no API call',async()=>{
-  const fetchImpl=async()=>assert.fail('No API call should occur');
-  assert.equal((await evaluate(check,{task:'x'},{...opts,fetchImpl})).reason,'missing_required_context');
-  assert.equal((await evaluate(check,{...state,observation:'extra'},{...opts,fetchImpl})).reason,'undeclared_observation');
-  const optional={...check,optionalInputs:['observation']};
-  const result=await evaluate(optional,state,{...opts,fetchImpl:async()=>response({applicability:{noul:0.9},violation:{noul:0.1}})});
-  assert.equal(result.decision,'no_violation_detected');
+
+test('conflicting identities are isolated while an independent policy is evaluated',async () => {
+  const result=await evaluate([policy,{...policy,version:2},{...policy,id:'independent'}],pair,{...opts,fetchImpl:async(_,options)=>{
+    const request=JSON.parse(options.body);
+    assert.ok(Object.keys(request.questions).every(key=>key.startsWith('p2_')));
+    return response(answersFor(request));
+  }});
+  assert.deepEqual(result.results.map(row=>row.decision),['unchecked','unchecked','advisory']);
 });
-test('API error, malformed scores and timeout are unchecked without error body leakage',async()=>{
-  const api=await evaluate(check,state,{...opts,fetchImpl:async()=>({ok:false,status:500,json:()=>assert.fail('Do not read error body')})});
-  assert.equal(api.decision,'unchecked');assert.equal(api.reason,'api_error');
-  const invalid=await evaluate(check,state,{...opts,fetchImpl:async()=>response({applicability:{noul:1},violation:{noul:5}})});
-  assert.equal(invalid.decision,'unchecked');assert.equal(invalid.rawScores.violation,5);
-  const timed=await evaluate(check,state,{...opts,timeoutMs:5,fetchImpl:()=>new Promise(()=>{})});
-  assert.equal(timed.decision,'unchecked');assert.equal(timed.reason,'request_timeout');
-  const thrown=await evaluate(check,state,{...opts,fetchImpl:async()=>{throw Error('private-error-content');}});
-  assert.equal(thrown.decision,'unchecked');assert.ok(!JSON.stringify(thrown).includes('private-error-content'));
-});
-test('late response cannot mutate a timed-out result',async()=>{
-  let release;
-  const fetchImpl=()=>new Promise(resolve=>{release=resolve;});
-  const result=await evaluate(check,state,{...opts,timeoutMs:5,fetchImpl});
-  const snapshot=JSON.stringify(result);
-  release(response({applicability:{noul:1},violation:{noul:1}}));
-  await new Promise(resolve=>setTimeout(resolve,5));
-  assert.equal(JSON.stringify(result),snapshot);
-});
-test('summary distinguishes misses, false alarms, abstentions and applicability',()=>{
-  const make=(decision,expectedViolation,a)=>({decision,expectedViolation,mode:'paired',scores:{applicability:a},thresholds:{positive:.8,negative:.2}});
-  const summary=summarize([make('not_applicable',true,.1),make('violation_detected',false,.9),make('unchecked',true,.5)]);
-  assert.equal(summary.missedBugs,1);assert.equal(summary.falseAlarms,1);assert.equal(summary.unchecked,1);assert.equal(summary.notApplicable,1);
-});
-test('credential acquisition shares timeout and late credentials never initiate fetch', async()=>{
-  let release; let calls=0;
-  const provider = () => new Promise(resolve=>{release=resolve;});
-  const result=await evaluate(check,state,{credentialProvider:provider,timeoutMs:5,
-    fetchImpl:async()=>{calls++;return response({applicability:{noul:1},violation:{noul:0}});}});
-  assert.equal(result.decision,'unchecked');
-  assert.equal(result.reason,'request_timeout');
-  release('mock-key');
-  await new Promise(resolve=>setTimeout(resolve,5));
-  assert.equal(calls,0);
-});
-test('invalid timeout and missing scores fail closed', async()=>{
+
+test('fixed thresholds gate applicability and evidence, then AND; every score validates before a shortcut', () => {
+  const scores=(questions,applicability=.8,evidenceSufficiency=.8)=>({applicability,evidenceSufficiency,questions});
+  assert.equal(decide(scores([.8,1])).decision,'advisory');
+  assert.equal(decide(scores([.8,.21])).decision,'tentative');
+  assert.equal(decide(scores([.8,.2])).decision,'no_concern_detected');
+  assert.equal(decide(scores([.2,.5])).decision,'no_concern_detected');
+  assert.equal(decide(scores([1],.2)).reason,'inapplicable');
+  assert.equal(decide(scores([1],.79)).reason,'applicability_uncertain');
+  assert.equal(decide(scores([1],1,.2)).reason,'insufficient_evidence');
+  assert.equal(decide(scores([1],1,.79)).reason,'evidence_uncertain');
+  for (const bad of [undefined,null,NaN,Infinity,-.1,1.1,'1']) {
+    assert.equal(decide(scores([.1,bad],.1)).reason,'invalid_scores');
+    assert.equal(decide(scores([.1,bad])).reason,'invalid_scores');
+  }
   assert.equal(decide(null).decision,'unchecked');
-  assert.equal(decide(undefined).decision,'unchecked');
-  const result=await evaluate(check,state,{...opts,timeoutMs:0,fetchImpl:()=>assert.fail('must not request')});
-  assert.equal(result.reason,'invalid_timeout');
+  assert.equal(decide(scores([])).decision,'unchecked');
+});
+
+test('partial/malformed answers invalidate only affected policy even if another answer is a definite no',async () => {
+  const result=await evaluate([policy,{...policy,id:'independent'}],pair,{...opts,fetchImpl:async(_,options)=>{
+    const answers=answersFor(JSON.parse(options.body));
+    answers.p0_applicability.noul=.1;
+    delete answers.p0_q1;
+    answers.p1_q0.noul=.5;
+    return response(answers);
+  }});
+  assert.equal(result.results[0].reason,'invalid_scores');
+  assert.equal(result.results[1].decision,'tentative');
+  assert.equal(result.suggestions[0].level,'tentative');
+  assert.equal(result.decision,'advisory');
+  for (const value of [true,'1',2,-1,null]) {
+    const invalid=await evaluate([policy],pair,{...opts,fetchImpl:async(_,options)=>{
+      const answers=answersFor(JSON.parse(options.body)); answers.p0_q1.noul=value; return response(answers);
+    }});
+    assert.equal(invalid.results[0].reason,'invalid_scores');
+  }
+});
+
+test('API/transport errors and malicious free text do not leak into saved result',async () => {
+  const failed=await evaluate([policy],pair,{...opts,fetchImpl:async()=>({ok:false,status:500,json:()=>assert.fail('do not read errors')})});
+  assert.equal(failed.reason,'api_error'); assert.equal(failed.requestHash,hashJSON(failed.request));
+  const thrown=await evaluate([policy],pair,{...opts,fetchImpl:async()=>{throw Error('SECRET_ERROR_BODY');}});
+  assert.equal(thrown.reason,'transport_or_response_error');
+  assert.equal(JSON.stringify(thrown).includes('SECRET_ERROR_BODY'),false);
+  const freeText=await evaluate([policy],pair,{...opts,fetchImpl:async(_,options)=>{
+    const answers=answersFor(JSON.parse(options.body)); answers.p0_q0.explanation='SECRET_ERROR_BODY';return response(answers);
+  }});
+  assert.equal(JSON.stringify(freeText).includes('SECRET_ERROR_BODY'),false);
+});
+
+test('credential, fetch and body parsing share a deadline; late completions cannot mutate or start fetch',async () => {
+  let releaseCredential;
+  const credential=await evaluate([policy],pair,{timeoutMs:15,credentialProvider:()=>new Promise(resolve=>{releaseCredential=resolve;}),fetchImpl:noAccess.fetchImpl});
+  assert.equal(credential.reason,'request_timeout'); assert.equal(credential.request,null);
+  releaseCredential('late-key');
+  await new Promise(resolve=>setTimeout(resolve,5));
+  for (const phase of ['fetch','body']) {
+    let release;
+    const fetchImpl=phase==='fetch' ? ()=>new Promise(resolve=>{release=resolve;}) : async()=>({ok:true,status:200,json:()=>new Promise(resolve=>{release=resolve;})});
+    const result=await evaluate([policy],pair,{...opts,timeoutMs:15,fetchImpl});
+    const saved=JSON.stringify(result);
+    assert.equal(result.reason,'request_timeout');
+    release(phase==='fetch'?response({}):{answers:{}});
+    await new Promise(resolve=>setTimeout(resolve,5));
+    assert.equal(JSON.stringify(result),saved);
+  }
+  const aborting=await evaluate([policy],pair,{...opts,timeoutMs:15,fetchImpl:(_,options)=>new Promise((_,reject)=>{
+    options.signal.addEventListener('abort',()=>reject(new Error('aborted')));
+  })});
+  assert.equal(aborting.reason,'request_timeout');
+});
+
+test('timeouts cannot exceed the native callback budget; rejected credentials are quiet',async () => {
+  for(const timeoutMs of [0,-1,6001,NaN]) assert.equal((await evaluate([policy],pair,{...noAccess,timeoutMs})).reason,'invalid_timeout');
+  const result=await evaluate([policy],pair,{credentialProvider:async()=>{throw Error('PRIVATE_FILE_PATH');},fetchImpl:noAccess.fetchImpl});
+  assert.equal(result.reason,'credential_unavailable'); assert.equal(result.request,null);
+  assert.equal(JSON.stringify(result).includes('PRIVATE_FILE_PATH'),false);
 });

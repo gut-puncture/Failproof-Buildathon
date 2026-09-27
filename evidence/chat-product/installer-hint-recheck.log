@@ -1,0 +1,7 @@
+test_selection_checks_versions_and_hook_feature (test_hooks.ToolVerificationTests.test_selection_checks_versions_and_hook_feature) ... ok
+test_unsupported_codex_and_node_fail_without_fallback (test_hooks.ToolVerificationTests.test_unsupported_codex_and_node_fail_without_fallback) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+OK

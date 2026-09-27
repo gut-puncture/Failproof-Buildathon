@@ -1,0 +1,36 @@
+test_concurrent_duplicate_stop_and_prompt_replay_cannot_recheck (test_hooks.HookTests.test_concurrent_duplicate_stop_and_prompt_replay_cannot_recheck) ... ok
+test_conflicting_prompt_keeps_first_but_checks_neither (test_hooks.HookTests.test_conflicting_prompt_keeps_first_but_checks_neither) ... ok
+test_dynamic_sorted_policy_snapshot_and_invalid_sibling (test_hooks.HookTests.test_dynamic_sorted_policy_snapshot_and_invalid_sibling) ... ok
+test_empty_collection_preserves_exact_initial_pair_without_runtime (test_hooks.HookTests.test_empty_collection_preserves_exact_initial_pair_without_runtime) ... ok
+test_immediate_active_exit_before_any_config_or_policy_read (test_hooks.HookTests.test_immediate_active_exit_before_any_config_or_policy_read) ... ok
+test_malformed_stop_does_not_consume_valid_turn (test_hooks.HookTests.test_malformed_stop_does_not_consume_valid_turn) ... ok
+test_missing_turn_never_falls_back_to_previous_prompt (test_hooks.HookTests.test_missing_turn_never_falls_back_to_previous_prompt) ... ok
+test_native_process_contract_and_unverified_advice_rejected (test_hooks.HookTests.test_native_process_contract_and_unverified_advice_rejected) ... ok
+test_oversized_and_symlinked_policy_become_null_without_reading_target (test_hooks.HookTests.test_oversized_and_symlinked_policy_become_null_without_reading_target) ... ok
+test_real_hook_process_empty_and_active_smoke (test_hooks.HookTests.test_real_hook_process_empty_and_active_smoke) ... ok
+test_runtime_failure_is_quiet_and_durable (test_hooks.HookTests.test_runtime_failure_is_quiet_and_durable) ... ok
+test_sessions_and_turns_remain_isolated (test_hooks.HookTests.test_sessions_and_turns_remain_isolated) ... ok
+test_strict_events_and_stop_boolean (test_hooks.HookTests.test_strict_events_and_stop_boolean) ... ok
+test_unsafe_state_and_cwd_rejected (test_hooks.HookTests.test_unsafe_state_and_cwd_rejected) ... ok
+test_configuration_extras_and_custom_ignore_preserved (test_hooks.InstallationTests.test_configuration_extras_and_custom_ignore_preserved) ... ok
+test_dry_run_and_idempotent_preservation (test_hooks.InstallationTests.test_dry_run_and_idempotent_preservation) ... ok
+test_invalid_existing_hooks_not_overwritten (test_hooks.InstallationTests.test_invalid_existing_hooks_not_overwritten) ... ok
+test_preserves_other_commands_in_our_group (test_hooks.InstallationTests.test_preserves_other_commands_in_our_group) ... ok
+test_rejects_inside_or_symlinked_reviewer_and_state (test_hooks.InstallationTests.test_rejects_inside_or_symlinked_reviewer_and_state) ... ok
+test_selection_checks_versions_and_hook_feature (test_hooks.ToolVerificationTests.test_selection_checks_versions_and_hook_feature) ... ok
+test_unsupported_codex_and_node_fail_without_fallback (test_hooks.ToolVerificationTests.test_unsupported_codex_and_node_fail_without_fallback) ... ok
+test_all_failed_calls_do_not_qualify_as_evaluation (test_learn.ReviewerTests.test_all_failed_calls_do_not_qualify_as_evaluation) ... ok
+test_changed_candidate_and_non_boolean_assessment_rejected (test_learn.ReviewerTests.test_changed_candidate_and_non_boolean_assessment_rejected) ... ok
+test_imperfect_advisory_activation_and_explicit_version_update (test_learn.ReviewerTests.test_imperfect_advisory_activation_and_explicit_version_update) ... ok
+test_malformed_scores_are_not_semantic_uncertainty (test_learn.ReviewerTests.test_malformed_scores_are_not_semantic_uncertainty) ... ok
+test_nested_reviewer_config_and_explicit_project (test_learn.ReviewerTests.test_nested_reviewer_config_and_explicit_project) ... ok
+test_only_policy_and_pair_enter_native_evaluation (test_learn.ReviewerTests.test_only_policy_and_pair_enter_native_evaluation) ... ok
+test_outside_cwd_enforced_even_through_symlinks (test_learn.ReviewerTests.test_outside_cwd_enforced_even_through_symlinks) ... ok
+test_real_shared_validator_rejects_extra_fields (test_learn.ReviewerTests.test_real_shared_validator_rejects_extra_fields) ... ok
+test_rejects_run_path_and_scope_substitution (test_learn.ReviewerTests.test_rejects_run_path_and_scope_substitution) ... ok
+test_selects_actual_pair_and_separates_provenance (test_learn.ReviewerTests.test_selects_actual_pair_and_separates_provenance) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.937s
+
+OK

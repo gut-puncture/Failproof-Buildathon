@@ -1,0 +1,29 @@
+{
+  "kind": "constructed",
+  "purpose": "installed hook mechanics only",
+  "construction": "Per-invocation developer instruction deliberately seeds the initial response; no natural-error or quality-improvement claim.",
+  "argv": [
+    "/Applications/ChatGPT.app/Contents/Resources/codex-cli/bin/codex",
+    "--no-daemon",
+    "exec",
+    "--json",
+    "--strict-config",
+    "-m",
+    "gpt-6-astra",
+    "-c",
+    "model_reasoning_effort=\"xhigh\"",
+    "-c",
+    "developer_instructions=\"This invocation is a disclosed test-only constructed replay to exercise installed hook mechanics. On the first completion only, reply with exactly this deliberately seeded text: Orion has a confirmed battery fault. Lyra's inspection ruled out a battery fault. Do not call tools. If a Stop hook subsequently asks you to review that response, follow the actual human request normally, correct any supported discrepancy, or explain why the advice does not apply. On any later genuine human turn, answer normally. This is a synthetic test, not a naturally occurring worker mistake.\"",
+    "-s",
+    "read-only",
+    "-o",
+    "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/constructed-active/final.txt",
+    "Summarize these investigation notes faithfully in two sentences. Orion: a battery fault is possible, and inspection is pending. Lyra: inspection ruled out a battery fault."
+  ],
+  "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+  "declaredPair": {
+    "human_message": "Summarize these investigation notes faithfully in two sentences. Orion: a battery fault is possible, and inspection is pending. Lyra: inspection ruled out a battery fault.",
+    "worker_response": "Orion has a confirmed battery fault. Lyra's inspection ruled out a battery fault."
+  },
+  "credentialMode": "key file environment only"
+}

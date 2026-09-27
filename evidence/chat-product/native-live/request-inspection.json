@@ -1,0 +1,18 @@
+{
+  "stateExactlyTwoFields": true,
+  "stringsIdenticalToInput": true,
+  "topLevelFields": [
+    "model",
+    "state",
+    "questions"
+  ],
+  "questionKeys": [
+    "p0_applicability",
+    "p0_evidence_sufficiency",
+    "p0_q0"
+  ],
+  "nativePackage": "submission/node_modules/failproofai@1.0.8-beta.0",
+  "kind": "live native Jev, constructed pair",
+  "httpStatus": 200,
+  "decision": "advisory"
+}

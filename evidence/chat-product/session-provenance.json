@@ -1,0 +1,166 @@
+{
+  "natural_worker": {
+    "sourceFile": "rollout-2026-09-27T21-46-07-01a0e3a6-fe87-7193-8da7-e2e97f5dbe15.jsonl",
+    "sourceSHA256": "361ba7d0b6ade0f33b44fbec19f6d9b96c12ff7bec86f88f787aff887516e939",
+    "selectedMetadata": [
+      {
+        "type": "session_meta",
+        "timestamp": "2026-09-27T16:17:07.812Z",
+        "id": "01a0e3a6-fe87-7193-8da7-e2e97f5dbe15",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+        "cli_version": "0.158.0-alpha.2.1",
+        "source": "cli"
+      },
+      {
+        "type": "turn_context",
+        "timestamp": "2026-09-27T16:17:08.713Z",
+        "turn_id": "01a0e3a7-ea99-72a2-84f3-13bff3d1e49b",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "type": "turn_context",
+        "timestamp": "2026-09-27T16:17:52.597Z",
+        "turn_id": "01a0e3a8-9972-72b1-b2dd-4756cfd4dddf",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "type": "turn_context",
+        "timestamp": "2026-09-27T16:19:58.912Z",
+        "turn_id": "01a0e3aa-86d2-7063-8720-a77d6da8071a",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      }
+    ]
+  },
+  "natural_reviewer": {
+    "sourceFile": "rollout-2026-09-27T21-53-18-01a0e3ad-9272-7031-adf9-d086adaf8201.jsonl",
+    "sourceSHA256": "81c663dcf5e184cd9b4b2cc966aa7a59c92fb3f0ec63a4be3544a7d10ee966d0",
+    "selectedMetadata": [
+      {
+        "type": "session_meta",
+        "timestamp": "2026-09-27T16:23:20.402Z",
+        "id": "01a0e3ad-9272-7031-adf9-d086adaf8201",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer",
+        "cli_version": "0.158.0-alpha.2.1",
+        "source": "cli"
+      },
+      {
+        "type": "turn_context",
+        "timestamp": "2026-09-27T16:23:23.247Z",
+        "turn_id": "01a0e3ad-9a35-73e3-9632-1eb47315a79c",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer",
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      }
+    ]
+  },
+  "constructed_seed": {
+    "sourceFile": "rollout-2026-09-27T21-57-28-01a0e3b1-63b7-7000-9180-93e439433ade.jsonl",
+    "sourceSHA256": "1fded08e0f2ca0088ccb2a1d08a35a5d4dcf26bbbb748f5db11d1061370218fa",
+    "selectedMetadata": [
+      {
+        "type": "session_meta",
+        "timestamp": "2026-09-27T16:27:28.761Z",
+        "id": "01a0e3b1-63b7-7000-9180-93e439433ade",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+        "cli_version": "0.158.0-alpha.2.1",
+        "source": "exec"
+      },
+      {
+        "type": "turn_context",
+        "timestamp": "2026-09-27T16:27:33.083Z",
+        "turn_id": "01a0e3b1-6438-7ac0-9f52-bc2a6fb72b67",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      }
+    ]
+  },
+  "constructed_active": {
+    "sourceFile": "rollout-2026-09-27T22-05-54-01a0e3b9-1d4a-7073-a874-f36445707230.jsonl",
+    "sourceSHA256": "8b5f7fbde5eeb8c7d157a79211bd7e89e3a5e5d4aef6a63a5785b090d4cda00f",
+    "selectedMetadata": [
+      {
+        "type": "session_meta",
+        "timestamp": "2026-09-27T16:35:55.046Z",
+        "id": "01a0e3b9-1d4a-7073-a874-f36445707230",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+        "cli_version": "0.158.0-alpha.2.1",
+        "source": "exec"
+      },
+      {
+        "type": "turn_context",
+        "timestamp": "2026-09-27T16:35:59.372Z",
+        "turn_id": "01a0e3b9-1df0-73e3-81f6-a31aeab4cd32",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "type": "turn_context",
+        "timestamp": "2026-09-27T16:36:43.631Z",
+        "turn_id": "01a0e3b9-cb1d-7553-bb1d-5e322dd31ae9",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      }
+    ]
+  },
+  "constructed_reviewer": {
+    "sourceFile": "rollout-2026-09-27T21-58-30-01a0e3b2-553b-7731-ad1f-0177a325511a.jsonl",
+    "sourceSHA256": "de9b20151dfcb146d2f137c93edf44de6a4a5063e8e8572f2d74deeab43b1dad",
+    "selectedMetadata": [
+      {
+        "type": "session_meta",
+        "timestamp": "2026-09-27T16:28:30.509Z",
+        "id": "01a0e3b2-553b-7731-ad1f-0177a325511a",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer",
+        "cli_version": "0.158.0-alpha.2.1",
+        "source": "exec"
+      },
+      {
+        "type": "turn_context",
+        "timestamp": "2026-09-27T16:28:35.079Z",
+        "turn_id": "01a0e3b2-55a8-72a2-9985-9f9e408a7a65",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer",
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "type": "turn_context",
+        "timestamp": "2026-09-27T16:33:49.939Z",
+        "turn_id": "01a0e3b7-23d0-7f63-9287-744d871525e6",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/reviewer",
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      }
+    ]
+  },
+  "fresh_chat": {
+    "sourceFile": "rollout-2026-09-27T22-07-07-01a0e3ba-3a87-78b3-917c-426b8fc59992.jsonl",
+    "sourceSHA256": "2c7c60ddd49396431765926bec9d01fba38f76e7235c7436f0f8442e512f708d",
+    "selectedMetadata": [
+      {
+        "type": "session_meta",
+        "timestamp": "2026-09-27T16:37:08.022Z",
+        "id": "01a0e3ba-3a87-78b3-917c-426b8fc59992",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+        "cli_version": "0.158.0-alpha.2.1",
+        "source": "exec"
+      },
+      {
+        "type": "turn_context",
+        "timestamp": "2026-09-27T16:37:12.076Z",
+        "turn_id": "01a0e3ba-3af8-7273-8a9d-d1e3bfb7704c",
+        "cwd": "/Users/Shailesh/Applications/Cursor/Jev_Hackathon/implementation-notes/acceptance/worker project",
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      }
+    ]
+  }
+}

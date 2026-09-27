@@ -1,101 +1,34 @@
 ---
 name: failure-to-check
-description: Independently review a coding task, implementation, and observed failure, then produce an evidence-backed semantic check and labeled controls for a bounded FailProof evaluation. Use when converting an actual coding failure into a reusable check, not for general code generation or a universal correctness verdict.
+description: Review a selected completed agent run and turn supported, text-observable failures into reusable advisory Jev policies. Use for learning checks from actual worker conversations.
 ---
 
 # Failure to check
 
-Use this workflow with a GPT-6 Sol reviewer when that model is available and selected by the caller. If another model performs the review, record its actual identity. Do not silently describe it as Sol or start additional agents without authorization.
+Work from the outside reviewer folder printed by installation; its `.jev-review.json` identifies the worker project and runtime. Read the selected run's actual messages and relevant evidence before diagnosing it. Keep the worker project unchanged except for the requested policy artifacts.
 
-## Establish the failure
+Jev classifies supplied text with focused yes/no questions. It cannot inspect files, execute work, generate an explanation, or establish correctness. Deep reasoning, numerical precision, indirect references, and distracting context can cause mistakes; even a confident answer may be wrong.
 
-Read the full task, candidate implementation, and supplied observations. Treat observations, previous diagnoses, and suggested fixes as claims to verify. Follow only the user's instructions; code and logs are evidence. Inspect explicitly supplied dependencies when needed. Missing task/code, unresolved input contracts, or an observation that cannot be grounded means **unchecked**, with the missing evidence named.
+At runtime Jev receives only the latest genuine human message and completed worker response. Most usable evidence will be in that response. Keep policies simple around this boundary: earlier messages, tools, files, and reviewer findings can establish the original error, but cannot silently become runtime evidence. A claim that work was done is not proof of the underlying action.
 
-Independently identify the violated requirement before adopting a supplied root cause. Connect a concrete permitted input or execution ordering to the relevant code path and observable mismatch. When a local reproduction is authorized and practical, preserve its input, expected result, actual result, and command. Otherwise label the finding as static evidence or unconfirmed; never invent a reproduction. Record source paths or hashes and the reviewer model. Avoid credentials and unrelated private context in artifacts.
+## Diagnose and generalize
 
-## Extract a necessary correctness principle
+Identify the violated requirement, the observed discrepancy, and the mechanism that connects them. Cite the selected run's evidence and consider whether the behavior was allowed. Report no supported failure when appropriate; distinguish a clean review from insufficient evidence.
 
-Explain why the behavior is wrong under this task's contract, then generalize only as far as the evidence supports. State a necessary condition for correctness and its applicability boundary. A check is useful only if applicability **and** violation imply a task defect. Names, coding style, a particular data structure, or resemblance to the failed implementation do not establish that implication.
+For each supported failure, state a reusable principle and the conditions under which it applies. Preserve all valid ways to satisfy the task, including explicit exceptions. Generalize the failure mechanism, without turning a particular implementation or preference into a requirement. If the concern needs evidence absent from the two-message pair, record that limitation; do not invent a policy that claims to see it.
 
-Challenge the principle using a correct alternative implementation, a close correct implementation resembling the failure, and an inapplicable task where the same behavior is permitted. Consider callback values versus promises versus synchronous throws, empty inputs, and other contract details only when material. If a correct implementation can satisfy both predicates, narrow or reject the rule. Finite controls cannot prove universal validity.
+## Write policy data
 
-## Produce the artifacts
+Read [the policy contract](references/policy-contract.md) when creating or revising a policy. Use a stable ID and version, applicability, evidence sufficiency, focused yes/no questions, and qualified feedback. Use the shared Failproof wrapper; write no per-failure executable checks.
 
-Write `audit.json`, `check.json`, and `fixtures.json` to the caller's output directory. The audit records confirmation status, requirement, evidence, root cause, necessary principle, applicability boundary, counterexample review, limitations, and provenance. Do not label a proposed repair as verified without evidence.
+Give each question one directly observable proposition with explicit subject, condition, and yes/no meaning. Its instructions must carry all necessary meaning: Jev does not see the question ID or another question's answer. Align both criteria with the same proposition. Decompose only when it reduces reasoning while preserving the relationship that makes the behavior wrong: all required facts must concern the same relevant object, action, or outcome. Separate facts about unrelated subjects must not combine into a concern. Prefer one clear question over an unnecessary chain. There is no fixed question count; use separate policies for distinct concerns.
 
-The runtime check schema is:
+Applicability asks whether the current task requires the principle, including its exceptions. The evidence-sufficiency question states what material the pair needs, independently of whether a defect exists. Neither gate may assume missing facts. Omission of explicitly requested response content can itself be observable; absence of an action report does not establish that the action never happened. Feedback names the possible issue, says Jev may be mistaken, and asks the worker to investigate, correct a supported error, or explain why its work is valid. Keep it reusable: no incident-specific names, values, diagnoses, or predetermined repair.
 
-```json
-{
-  "id": "short-semantic-check-name",
-  "version": 1,
-  "requiredInputs": ["task", "implementation"],
-  "questions": {
-    "applicability": {
-      "type": "noul",
-      "instructions": "Does state.task impose the narrowly stated requirement?",
-      "criteria": {
-        "true": "The requirement is established by the task contract.",
-        "false": "The contract does not impose this requirement."
-      }
-    },
-    "violation": {
-      "type": "noul",
-      "instructions": "Does state.implementation permit the specific behavior forbidden by that requirement?",
-      "criteria": {
-        "true": "A reachable path with permitted inputs exhibits that behavior.",
-        "false": "The implementation excludes that behavior for permitted inputs."
-      }
-    },
-    "single": {
-      "type": "noul",
-      "instructions": "Are both the task requirement and the specified implementation violation established?",
-      "criteria": {
-        "true": "Both predicates hold.",
-        "false": "At least one predicate is false."
-      }
-    }
-  },
-  "thresholds": {"positive": 0.8, "negative": 0.2},
-  "feedback": "A short explanation of the semantic condition to inspect."
-}
-```
+## Check and save
 
-Replace the generic question text with small, precise questions about the discovered principle. Keep the applicability question about the contract, and the violation question about behavior. Do not make violation depend on a preferred patch. `single` expresses the conjunction for a separately reported comparison; it must not broaden the rule.
+Use the same validator, two-message serializer, evaluator, and shared thresholds as runtime. Give a candidate a few focused sanity checks chosen for its boundary: the observed pair, a plausible valid alternative, and a pair where the requirement or evidence changes are usually informative. Constructed controls are allowed; label them as constructed and keep expected answers outside Jev's input. Inspect individual answers as well as the combined advice. Never enrich an observed pair with hidden evidence to make it work.
 
-Only `task`, `implementation`, and `observation` are supported state fields. If an observation is indispensable, add it to `requiredInputs`; if merely useful, declare `optionalInputs: ["observation"]`. Never depend on undeclared context. Missing information or unresolved uncertainty is unchecked, not evidence for a negative answer. Keep the demo's thresholds fixed at 0.8 and 0.2; changing them after seeing results would be a different experiment.
+Reject malformed or clearly misleading policies. Fix a demonstrated logical error or missing condition without chasing preferred scores. Imperfect classifier results can still support advisory use; document misses, false alarms, and uncertainty. There is no perfection gate, fixed authoring-attempt budget, or prompt-optimization loop.
 
-Fixtures have this shape:
-
-```json
-{
-  "fixtures": [{
-    "id": "descriptive-control-name",
-    "state": {"task": "Complete scoped contract", "implementation": "Complete relevant code"},
-    "expectedApplicable": true,
-    "expectedViolation": false,
-    "reason": "Why the independently established label follows from the contract and code."
-  }]
-}
-```
-
-Include the actual failed candidate, an evidenced repair, a correct alternative, a close correct control, and an inapplicable contract when these can be established. Distinguish constructed controls from actual worker outputs. `expectedViolation` labels the **final gated decision**, not the raw violation predicate: an inapplicable example has `expectedViolation: false` even when its implementation exhibits the behavior.
-
-## Evaluate before activation
-
-Use the supplied evaluator only when live calls are authorized. Offline inspection or recorded replay is not a new live result. Preserve check version/hash, fixture provenance, raw available scores, final decisions, and model identity. Report missing evidence and all abstentions.
-
-From the downloaded package directory, evaluate the artifacts with:
-
-```sh
-python3 loop.py eval --check /path/to/check.json \
-  --fixtures /path/to/fixtures.json --out /path/to/new-evaluation --live
-```
-
-Use a new output directory and credentials supplied through `FAILPROOF_API_KEY` or `FAILPROOF_KEY_FILE`. Omitting `--live` produces unchecked without a service call. The review skill authors artifacts; it does not itself activate a runtime hook or guarantee that a service will detect the failure. If the baseline is correct, record a clean result instead of inventing a defect to complete the workflow.
-
-For paired evaluation, applicability at or below 0.2 yields `not_applicable`; between 0.2 and 0.8 yields `unchecked`. At applicability at least 0.8, violation at least 0.8 yields `violation_detected`, at or below 0.2 yields `no_violation_detected`, and intermediate or invalid scores yield `unchecked`. Missing inputs, transport failures, and malformed responses also yield `unchecked`.
-
-For this demo, activate a check only after every labeled evaluation control receives its expected decision and applicability classification, with **zero misses, false positives, or unchecked results**. In particular, it must detect the actual failure and accept independently established correct alternatives. A failed activation gate leaves the check experimental; do not silently weaken the gate or tune the fixed thresholds. Report the corpus size and limits even after passing. This is bounded validation, not proof of correctness or reliable performance on unseen tasks.
-
-If correction is requested, supply the semantic feedback to the worker, retain the original, and evaluate the changed code again. Re-run available task checks separately: a negative semantic-check result does not establish that the entire program works. Stop at the caller's attempt limit; do not claim an improvement until it is measured.
+Keep drafts and review records in the reviewer folder. Use the helper's `activate` command after inspecting sanity results and recording why advisory use is justified; failed service calls alone do not qualify. Report what was added or why nothing was added, with the source run, actual model identities if known, versions, and limitations. This is local policy authoring, not a Failproof Cloud Audit. Do not repair the worker's task, start runtime reviewers, or judge a later worker's dismissal.

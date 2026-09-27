@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "session_id": "01a0e3a6-fe87-7193-8da7-e2e97f5dbe15",
+  "turn_id": "01a0e3a8-9972-72b1-b2dd-4756cfd4dddf",
+  "completedAt": "2026-09-27T16:18:06.202301+00:00",
+  "evidenceScope": "initial_response_before_advice",
+  "decision": "unchecked",
+  "reason": "empty_policies",
+  "policyFiles": [],
+  "results": [],
+  "suggestions": [],
+  "request": null,
+  "capturedAt": "2026-09-27T16:17:52.829544+00:00"
+}
